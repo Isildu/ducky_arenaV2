@@ -1,0 +1,30 @@
+{
+  "name": "ducky_arenav2",
+  "version": "1.0.0",
+  "description": "**Duckies Arena** es un videojuego multijugador competitivo 3 vs 3 desarrollado bajo una arquitectura cliente-servidor moderna, diseñado como un proyecto formativo y profesional orientado a simular el pipeline real de un estudio indie de videojuegos.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Isildu/ducky_arenaV2.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/Isildu/ducky_arenaV2/issues"
+  },
+  "homepage": "https://github.com/Isildu/ducky_arenaV2#readme",
+  "dependencies": {
+    "cors": "^2.8.6",
+    "dotenv": "^17.4.2",
+    "express": "^5.2.1",
+    "pg": "^8.21.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.14"
+  }
+}
