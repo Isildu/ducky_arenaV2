@@ -192,6 +192,8 @@ const deleteDailyQuest = async (req, res) => {
 module.exports = {
     getDailyQuests,
     getDailyQuestsById,
+    getReward,
+    getDescription,
     createDailyQuest,
     //updateDailyQuest,
     patchDailyQuest,
