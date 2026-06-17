@@ -5,7 +5,9 @@ const {
  getCharactersById,
  getRole,
  getName,
- createCharacter
+ createCharacter,
+ updateCharacter,
+ deleteCharacter
 } = require("../controllers/characters.controller");
 
 router.get("/", getName);             // Devuelve id y nombre de todos
@@ -14,5 +16,7 @@ router.get("/all", getCharacters);     // Devuelve todos los personajes completo
 router.get("/:id", getCharactersById); // Devuelve el personaje completo por su ID
 
 router.post("/", createCharacter);
+router.put("/:id", updateCharacter);
+router.delete("/:id", deleteCharacter);
 
 module.exports = router;
