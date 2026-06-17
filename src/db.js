@@ -14,7 +14,7 @@ const pool = new Pool({
   host: "localhost",
   user: "postgres",
   password: "ducky_secret_pass123",
-  database: "postgres",
+  database: "duckies_arena_db",
   port: 5432,
 });
 
