@@ -1,307 +1,271 @@
-# 🦆 Duckies Arena
+# 🦆 Ducky Arena V2
 
-## 🎮 Visión General del Proyecto
+## 🎮 Visión General
 
-**Duckies Arena** es un videojuego multijugador competitivo 3 vs 3 desarrollado bajo una arquitectura cliente-servidor moderna, diseñado como un proyecto formativo y profesional orientado a simular el pipeline real de un estudio indie de videojuegos.
+**Ducky Arena** es un videojuego multijugador competitivo inspirado en MOBAs y sistemas de gamificación educativa.
 
-El proyecto combina mecánicas inspiradas en MOBAs y RPGs tácticos con un enfoque de **Gamificación Educativa (EdTech)**, donde el combate entre jugadores se resuelve mediante conocimientos técnicos de programación y desarrollo web.
+Los enfrentamientos entre jugadores se resuelven mediante conocimientos técnicos de programación y desarrollo web, transformando preguntas y retos técnicos en mecánicas de combate.
 
-La propuesta busca demostrar competencias avanzadas en:
-
-- Desarrollo Full-Stack aplicado a videojuegos.
-- Arquitectura multijugador síncrona.
-- Diseño de sistemas de progresión y matchmaking.
-- Integración entre motor gráfico y backend REST.
-- Diseño de gameplay basado en conocimiento técnico.
-- Sistemas de combate matemático y lógica de estados.
-
-La estética del juego adopta un enfoque **cartoon/humorístico**, protagonizado por patitos de goma con clases y habilidades absurdamente competitivas.
+Este proyecto busca simular una arquitectura real de desarrollo de videojuegos utilizando una estructura cliente-servidor moderna.
 
 ---
 
-# 🏗️ Arquitectura y Stack Tecnológico
+# 👥 Integrantes
 
-## 🔧 Arquitectura General
+* Mateo
+* Oriol
+* Jaime
 
-Duckies Arena implementa una arquitectura distribuida desacoplada:
+---
+
+# 🏗️ Arquitectura del Proyecto
 
 ```text
 ┌────────────────────┐
-│      CLIENTE       │
-│   Godot Engine     │
-│ Gameplay/UI/FX     │
+│      FRONTEND      │
+│       React        │
+│ (Pendiente integrar)
 └─────────┬──────────┘
           │ REST API
           ▼
 ┌────────────────────┐
 │      BACKEND       │
-│ Django + DRF       │
-│ Auth/Stats/MMR     │
+│ Node + Express     │
+│ CRUD + API REST    │
 └─────────┬──────────┘
           │
           ▼
 ┌────────────────────┐
 │    PostgreSQL      │
-│ Persistencia Data  │
+│    Dockerizado     │
 └────────────────────┘
 ```
 
 ---
 
-## ⚙️ Tecnologías Utilizadas
+# ⚙️ Tecnologías Utilizadas
 
-| Área | Tecnología | Propósito |
-|---|---|---|
-| Motor de Juego | Godot Engine | Gameplay, físicas, UI y render |
-| Backend API | Django | Arquitectura del servidor |
-| API REST | Django REST Framework | Comunicación cliente-servidor |
-| Base de Datos | PostgreSQL | Persistencia de usuarios y progresión |
-| Autenticación | JWT/Auth System | Login y sesiones |
-| Matchmaking | Sistema custom MMR | Emparejamiento competitivo |
-| Networking | HTTP + sincronización lógica | Gestión de estado de partidas |
-| Arquitectura | Cliente-Servidor | Separación lógica y escalabilidad |
-
----
-
-# ⚔️ Mecánicas Principales de Gameplay
-
-## 🗺️ Sistema de Mapa y Estructura de Partida
-
-El gameplay está diseñado bajo una estructura inspirada en MOBAs simplificados como *League of Legends*, adaptada a partidas rápidas y tácticas.
-
-### Características del mapa
-
-- Dos bases enfrentadas.
-- Sistema de **3 carriles (Lanes)**.
-- Distribución simétrica competitiva.
-- Fases tácticas previas al combate.
-- Sistema de descubrimiento enemigo.
+| Área                 | Tecnología          |
+| -------------------- | ------------------- |
+| Frontend             | React *(pendiente)* |
+| Backend              | Node.js             |
+| Framework API        | Express.js          |
+| Base de Datos        | PostgreSQL          |
+| Contenedores         | Docker              |
+| Gestión BD           | pgAdmin             |
+| Comunicación         | REST API            |
+| Control de versiones | Git + GitHub        |
 
 ---
 
-## 🎯 Fases de la Partida
+# 🎮 Concepto del Juego
 
-### 1. Fase de Selección
+Duckies Arena mezcla:
 
-Antes del inicio de la partida:
+* Competición multijugador.
+* Preguntas técnicas.
+* Combate basado en habilidades.
+* Progresión de cuenta.
+* Personalización mediante cosméticos.
 
-- Cada jugador selecciona secretamente un carril.
-- El sistema registra la elección sin mostrarla al resto.
-- La composición táctica del equipo depende de esta decisión.
+Las categorías educativas incluyen:
 
-Esto introduce:
-
-- Estrategia previa al combate.
-- Lectura psicológica del rival.
-- Distribución táctica del equipo.
-
----
-
-### 2. Fase de Despliegue
-
-Cuando comienza la partida:
-
-- Se elimina la “niebla de guerra”.
-- Los jugadores descubren:
-  - su rival directo,
-  - la línea asignada,
-  - la composición rival.
-
-Esto genera un momento de transición táctica y adaptación inmediata.
+* HTML
+* CSS
+* JavaScript
+* Git
+* APIs REST
+* Bases de Datos
+* Backend
+* Arquitectura Web
 
 ---
 
-# 🧠 Sistema de Combate Trivia (EdTech Combat System)
+# 🦆 Personajes del Juego
 
-El núcleo innovador de Duckies Arena es su sistema de combate educativo.
+Cada personaje posee estadísticas y habilidades propias.
 
-## 💡 Mecánica Principal
-
-En lugar de ataques tradicionales:
-
-- Los jugadores deben responder correctamente preguntas técnicas.
-- Las respuestas activan:
-  - ataques,
-  - defensas,
-  - buffs,
-  - debuffs,
-  - habilidades especiales.
+| Personaje      | Rol     |
+| -------------- | ------- |
+| Pato Asesino   | Hacker  |
+| Pato Robusto   | Tank    |
+| Pato Curandero | Healer  |
+| Pato Mago      | Mage    |
+| Pato Escudero  | Support |
 
 ---
 
-## 📚 Categorías Técnicas
+# 🚀 Instalación del Proyecto
 
-Las preguntas incluyen contenidos relacionados con:
+## 1. Clonar repositorio
 
-- HTML
-- CSS
-- JavaScript
-- Git
-- APIs REST
-- Bases de Datos
-- Algoritmia
-- Backend Development
-- Arquitectura Web
-
----
-
-## ⚡ Resultado del Combate
-
-```text
-Daño Final =
-(Poder Base × Multiplicador de Clase × Precisión)
-- Mitigación del Rival
-+ Buffs/Debuffs Activos
-```
-
-La precisión técnica del jugador impacta directamente el rendimiento competitivo.
-
----
-
-# 🦆 Sistema de Clases y Personajes
-
-Cada personaje posee estadísticas base únicas y un rol táctico definido.
-
-## 📊 Tabla de Clases
-
-| Personaje | Rol | Vida | Daño | Aguante | Soporte | Especialidad |
-|---|---|---|---|---|---|---|
-| HackQuack | Hacker/Debuffer | Media | Alta | Baja | Media | Alteración lógica y debuffs |
-| Duck Vader | Tanque/Control | Muy Alta | Media | Muy Alta | Baja | Mitigación de daño |
-| Magicuack | Mago Burst | Baja | Muy Alta | Baja | Media | Multiplicadores ofensivos |
-| Chef Duck | Híbrido Heal/DPS | Media | Media | Media | Alta | Curación y ataques absurdos |
-| Barduck | Support Buffer | Media | Baja | Media | Muy Alta | Buffs de equipo |
-
----
-
-## 🧩 Diseño de Roles
-
-### 🖥️ HackQuack
-Especialista en manipular estados del enemigo:
-
-- reducción de daño,
-- corrupción de buffs,
-- alteración de estadísticas temporales.
-
----
-
-### 🛡️ Duck Vader
-Tanque principal del juego:
-
-- alta resistencia,
-- mitigación pasiva,
-- control defensivo.
-
-Ideal para proteger aliados y absorber daño.
-
----
-
-### 🔮 Magicuack
-Clase orientada al daño explosivo:
-
-- grandes multiplicadores,
-- alto riesgo/recompensa,
-- dependencia de precisión técnica.
-
----
-
-### 🍳 Chef Duck
-Personaje híbrido:
-
-- soporte ofensivo,
-- curaciones absurdas,
-- ataques culinarios humorísticos.
-
----
-
-### 🎵 Barduck
-Especialista en utilidad:
-
-- buffs globales,
-- mejora de estadísticas,
-- soporte táctico.
-
----
-
-# 📈 Sistema de Progresión y Cuenta
-
-Duckies Arena implementa un sistema de progresión persistente de cuenta.
-
-## 🎚️ Nivel Máximo
-
-```text
-Nivel Máximo de Cuenta: 30
+```bash
+git clone https://github.com/Isildu/ducky_arenaV2.git
+cd ducky_arenaV2
 ```
 
 ---
 
-## 🔓 Sistema de Desbloqueos
+## 2. Configurar variables de entorno
 
-A medida que el jugador sube de nivel:
+Crear archivo `.env`
 
-- desbloquea nuevas categorías técnicas,
-- aumenta la complejidad de preguntas,
-- obtiene cosméticos exclusivos,
-- expande opciones estratégicas.
+```env
+DB_HOST=localhost
+DB_PORT=5432
+DB_NAME=duckies_arena_db
+DB_USER=postgres
+DB_PASSWORD=TU_PASSWORD
 
----
-
-## 🧠 Progresión Educativa Integrada
-
-El sistema de progresión está diseñado para incentivar el aprendizaje técnico progresivo.
-
-### Ejemplo Conceptual
-
-| Nivel | Tecnología Desbloqueada | Recompensa |
-|---|---|---|
-| Nivel 1 | HTML | Skin básica |
-| Nivel 2 | CSS | Cosmético intermedio |
-| Nivel 3 | JavaScript | Efectos visuales especiales |
-| Nivel 5+ | APIs REST | Animaciones avanzadas |
-| Nivel 10+ | Backend/DB | Cosméticos raros |
-| Nivel 20+ | Arquitectura Software | Contenido competitivo avanzado |
+PORT=3000
+```
 
 ---
 
-## 🎨 Cosméticos y Personalización
+## 3. Levantar Docker
 
-Los desbloqueos incluyen:
+```bash
+docker compose up -d
+```
 
-- skins exclusivas,
-- animaciones,
-- efectos visuales,
-- títulos de jugador,
-- banners competitivos,
-- efectos de habilidades.
+Comprobar:
 
----
-
-# 🚀 Objetivos Técnicos del Proyecto
-
-Duckies Arena fue diseñado como un entorno de práctica profesional enfocado en:
-
-- Arquitectura multijugador.
-- Diseño de videojuegos competitivos.
-- Backend escalable para videojuegos.
-- Sistemas de progresión persistente.
-- APIs REST aplicadas a gaming.
-- Integración Full-Stack Game Development.
-- Gamificación educativa.
-- Diseño de sistemas de combate complejos.
-- Gestión de estados sincronizados en tiempo real.
+```bash
+docker ps
+```
 
 ---
 
-# 🎯 Filosofía del Proyecto
+## 4. Importar base de datos
 
-Duckies Arena busca demostrar cómo el aprendizaje técnico puede integrarse en experiencias multijugador competitivas sin perder diversión, identidad visual ni profundidad estratégica.
+PowerShell:
 
-El proyecto mezcla:
+```powershell
+Get-Content .\UF2175_PP_DuckiesArena.sql |
+docker exec -i duckies_postgres_db psql -U postgres -d duckies_arena_db
+```
 
-- Educación técnica,
-- Diseño de videojuegos,
-- Arquitectura backend,
-- UX competitiva,
-- y sistemas RPG tácticos
+---
 
-en una experiencia humorística centrada en patitos de goma armados con conocimiento de programación.
+## 5. Instalar dependencias
+
+```bash
+npm install
+```
+
+---
+
+## 6. Iniciar servidor
+
+```bash
+npm run dev
+```
+
+Servidor disponible en:
+
+```text
+http://localhost:3000
+```
+
+---
+
+# 🔌 API REST
+
+## Characters
+
+```text
+GET    /api/characters
+GET    /api/characters/:id
+POST   /api/characters
+PUT    /api/characters/:id
+DELETE /api/characters/:id
+```
+
+---
+
+## Abilities
+
+```text
+GET    /api/abilities
+GET    /api/abilities/:id
+POST   /api/abilities
+PUT    /api/abilities/:id
+DELETE /api/abilities/:id
+```
+
+---
+
+## Cosmetics
+
+```text
+GET    /api/cosmetics
+GET    /api/cosmetics/:id
+POST   /api/cosmetics
+PUT    /api/cosmetics/:id
+DELETE /api/cosmetics/:id
+```
+
+---
+
+## Users
+
+```text
+GET    /api/users
+GET    /api/users/:id
+POST   /api/users
+PUT    /api/users/:id
+DELETE /api/users/:id
+```
+
+---
+
+# 📦 Estado del Proyecto
+
+## Backend
+
+✅ CRUD completo Characters
+✅ CRUD completo Abilities
+✅ CRUD completo Cosmetics
+✅ CRUD completo Users
+
+---
+
+## Infraestructura
+
+✅ PostgreSQL dockerizado
+✅ pgAdmin conectado
+✅ Variables de entorno configuradas
+✅ API REST funcional
+
+---
+
+## Próximas fases
+
+⬜ Desarrollo Frontend React
+⬜ Integración React ↔ API
+⬜ Interfaz visual del juego
+⬜ Sistema de autenticación completo
+
+---
+
+# 📝 Notas Técnicas
+
+* El archivo `.env` **NO se sube al repositorio**.
+* Usar `.env.example` como plantilla.
+* Ejecutar Docker antes del backend.
+* La columna `img_url` actualmente tiene longitud limitada y podrá ampliarse en futuras versiones.
+
+---
+
+# 🎯 Objetivo Académico
+
+Este proyecto busca aplicar conceptos reales de:
+
+* Desarrollo Full Stack
+* Arquitectura Cliente–Servidor
+* Diseño de APIs REST
+* Gestión de bases de datos
+* Dockerización
+* Desarrollo colaborativo mediante Git
+
+en un entorno práctico y orientado al desarrollo de videojuegos.
