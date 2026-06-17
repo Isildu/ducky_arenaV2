@@ -7,6 +7,7 @@ const charactersRoutes = require("./routes/characters.routes");
 const playerRoutes = require("./routes/players.routes");
 const cosmeticRoutes = require("./routes/cosmetics.routes");
 const questRoutes = require("./routes/quests.routes");
+const friendRoutes = require("./routes/friends.routes");
 
 
 const app = express();
@@ -18,6 +19,7 @@ app.use("/api/characters", charactersRoutes);
 app.use("/profiles", playerRoutes);
 app.use("/player-cosmetics", cosmeticRoutes);
 app.use("/player-quests", questRoutes);
+app.use("/player-friends", friendRoutes);
 
 // Ruta de prueba para verificar que el localhost funciona
 app.get("/", (req, res) => {
