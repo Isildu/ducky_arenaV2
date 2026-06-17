@@ -5,6 +5,7 @@ const cors = require("cors");
 
 const charactersRoutes = require("./routes/characters.routes");
 const playerRoutes = require("./routes/players.routes");
+const cosmeticRoutes = require("./routes/cosmetics.routes");
 
 
 const app = express();
@@ -14,6 +15,7 @@ app.use(express.json());
 
 app.use("/api/characters", charactersRoutes);
 app.use("/profiles", playerRoutes);
+app.use("/player-cosmetics", cosmeticRoutes);
 
 // Ruta de prueba para verificar que el localhost funciona
 app.get("/", (req, res) => {
