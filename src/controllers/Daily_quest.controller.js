@@ -139,8 +139,6 @@ const patchDailyQuest = async (req, res) => {
             return res.status(400).json({ message: "No se proporcionaron campos válidos para actualizar" });
         }
 
-        // Agregar updated_at y el ID
-        setClause.push(`updated_at = CURRENT_TIMESTAMP`);
         values.push(id);
 
         const result = await pool.query(
