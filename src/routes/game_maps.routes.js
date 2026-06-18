@@ -9,7 +9,7 @@ const {
     //updateGameMap,
     patchGameMap,
     deleteGameMap
-} = require("../controllers/game_maps.CRUD.js");
+} = require("../controllers/game_maps.controller.js");
 
 router.get("/environment/:environment_type", getGameMapsByEnvironmentType); // Filtrar por tipo de entorno
 router.get("/names", getGameMapNames); // Obtener solo los nombres de los mapas
