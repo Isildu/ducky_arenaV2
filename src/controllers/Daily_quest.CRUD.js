@@ -4,7 +4,7 @@ const pool = require("../db");
 // 📋 READ - Obtener todos los quests diarios
 const getDailyQuests = async (req, res) => {
     try {
-        const result = await pool.query("SELECT * FROM ducky_arena.daily_quests ORDER BY id ASC");
+        const result = await pool.query("SELECT * FROM ducky_arena.daily_quest ORDER BY id ASC");
         res.status(200).json(result.rows);
     } catch (error) {
         res.status(500).json({ error: "Error al obtener los quests diarios: " + error.message });
@@ -15,7 +15,7 @@ const getDailyQuests = async (req, res) => {
 const getDailyQuestsById = async (req, res) => {
     const { id } = req.params;
     try {
-        const result = await pool.query("SELECT * FROM ducky_arena.daily_quests WHERE id = $1", [id]);
+        const result = await pool.query("SELECT * FROM ducky_arena.daily_quest WHERE id = $1", [id]);
         
         if (result.rows.length === 0) {
             return res.status(404).json({ message: "Quest diario no encontrado" });
@@ -34,7 +34,7 @@ const getReward = async (req, res) => {
         if (!reward_coins) {
             return res.status(400).json({ message: "Debes proporcionar un tipo de recompensa en la query (?reward_coins=...)" });
         }
-        const result = await pool.query("SELECT * FROM ducky_arena.daily_quests WHERE reward_coins = $1", [reward_coins]);
+        const result = await pool.query("SELECT * FROM ducky_arena.daily_quest WHERE reward_coins = $1", [reward_coins]);
         res.status(200).json(result.rows);
     } catch (error) {
         res.status(500).json({ error: "Error al filtrar por recompensa: " + error.message });
@@ -44,7 +44,7 @@ const getReward = async (req, res) => {
 // 📋 READ - Obtener solo descripcion
 const getDescription = async (req, res) => {
     try {
-        const result = await pool.query("SELECT id, description FROM ducky_arena.daily_quests ORDER BY id ASC");
+        const result = await pool.query("SELECT id, description FROM ducky_arena.daily_quest ORDER BY id ASC");
         res.status(200).json(result.rows);
     } catch (error) {
         res.status(500).json({ error: "Error al obtener las descripciones: " + error.message });
@@ -58,7 +58,7 @@ const createDailyQuest = async (req, res) => {
     try {
         const result = await pool.query(
             `
-            INSERT INTO ducky_arena.daily_quests
+            INSERT INTO ducky_arena.daily_quest
             (description, reward_coins)
             VALUES ($1,$2)
             RETURNING *
@@ -83,7 +83,7 @@ const createDailyQuest = async (req, res) => {
     try {
         const result = await pool.query(
             `
-            UPDATE ducky_arena.daily_quests 
+            UPDATE ducky_arena.daily_quest 
             SET 
                 description = COALESCE($1, description),
                 reward_coins = COALESCE($2, reward_coins),
@@ -141,7 +141,7 @@ const patchDailyQuest = async (req, res) => {
 
         const result = await pool.query(
             `
-            UPDATE ducky_arena.daily_quests 
+            UPDATE ducky_arena.daily_quest
             SET ${setClause.join(', ')}
             WHERE id = $${paramCount}
             RETURNING *
@@ -169,7 +169,7 @@ const deleteDailyQuest = async (req, res) => {
 
     try {
         const result = await pool.query(
-            "DELETE FROM ducky_arena.daily_quests WHERE id = $1 RETURNING *",
+            "DELETE FROM ducky_arena.daily_quest WHERE id = $1 RETURNING *",
             [id]
         );
 
