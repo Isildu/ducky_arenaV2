@@ -6,7 +6,7 @@ const {
  getRole,
  getName,
  createCharacter
-} = require("../controllers/characters.controller");
+} = require("../controllers/characters.controller.js");
 
 router.get("/", getName);             // Devuelve id y nombre de todos
 router.get("/role", getRole);         // Filtra por rol usando ?type=VALOR
