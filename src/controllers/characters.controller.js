@@ -75,11 +75,68 @@ const createCharacter = async (req, res) => {
     }
 };
 
+const updateCharacter = async (req, res) => {
+    const { id } = req.params;
+    const { name, role, base_health, attack_damage, endurance } = req.body;
+
+    try {
+        const result = await pool.query(
+            `
+            UPDATE ducky_arena.characters
+            SET name = $1,
+                role = $2,
+                base_health = $3,
+                attack_damage = $4,
+                endurance = $5
+            WHERE id = $6
+            RETURNING *
+            `,
+            [name, role, base_health, attack_damage, endurance, id]
+        );
+
+        if (result.rows.length === 0) {
+            return res.status(404).json({ message: "Personaje no encontrado" });
+        }
+
+        res.status(200).json(result.rows[0]);
+    } catch (error) {
+        res.status(500).json({
+            error: "Error actualizando personaje: " + error.message
+        });
+    }
+};
+
+const deleteCharacter = async (req, res) => {
+    const { id } = req.params;
+
+    try {
+        const result = await pool.query(
+            "DELETE FROM ducky_arena.characters WHERE id = $1 RETURNING *",
+            [id]
+        );
+
+        if (result.rows.length === 0) {
+            return res.status(404).json({ message: "Personaje no encontrado" });
+        }
+
+        res.status(200).json({
+            message: "Personaje eliminado correctamente",
+            character: result.rows[0]
+        });
+    } catch (error) {
+        res.status(500).json({
+            error: "Error eliminando personaje: " + error.message
+        });
+    }
+};
+
 // Exportamos exactamente lo que tu archivo de rutas necesita
 module.exports = {
     getCharacters,
     getCharactersById,
     getRole,
     getName,
-    createCharacter
+    createCharacter,
+    updateCharacter,
+    deleteCharacter
 };
