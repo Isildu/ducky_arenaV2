@@ -1,5 +1,6 @@
-const router = require("express").Router();
-
+// matches.routes.js
+const express = require('express');
+const router = express.Router();
 const {
     getMatches,
     getMatchById,
@@ -9,18 +10,31 @@ const {
     createMatch,
     patchMatch,
     deleteMatch
-} = require("../controllers/matches.controller.js");
+} = require('../controllers/matches.controller');
 
-router.get("/environment/:environment_type", getMatchesByEnvironmentType); // Filtrar por tipo de entorno
-router.get("/names", getMatchNames); // Obtener solo los nombres de los partidos
-router.get("/", getMatches); // Todos los partidos
-router.get("/:id", getMatchById); // Partido específico por ID
+// 📋 RUTAS READ (GET)
+// Obtener todas las partidas
+router.get('/', getMatches);
 
-router.post("/", createMatch);
+// Obtener información básica de partidas (solo ID, mapa, modo, tiempo)
+router.get('/basic', getMatchBasicInfo);
 
-//router.put("/:id", updateMatch);    // Actualización completa
-router.patch("/:id", patchMatch);   // Actualización parcial
+// Obtener partidas por modo de juego (query: ?game_mode=)
+router.get('/by-game-mode', getMatchesByGameMode);
 
-router.delete("/:id", deleteMatch);
+// Obtener partidas por mapa (query: ?map_id=)
+router.get('/by-map', getMatchesByMapId);
+
+// Obtener una partida por ID
+router.get('/:id', getMatchById);
+
+// ✨ RUTA CREATE (POST)
+router.post('/', createMatch);
+
+// 🔄 RUTA UPDATE PARCIAL (PATCH)
+router.patch('/:id', patchMatch);
+
+// 🗑️ RUTA DELETE
+router.delete('/:id', deleteMatch);
 
 module.exports = router;
