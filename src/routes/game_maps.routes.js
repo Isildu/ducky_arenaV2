@@ -11,7 +11,7 @@ const {
     deleteGameMap
 } = require("../controllers/game_maps.controller.js");
 
-router.get("/environment/:environment_type", getGameMapsByEnvironmentType); // Filtrar por tipo de entorno
+router.get("/environment", getGameMapsByEnvironmentType);// Filtrar por tipo de entorno
 router.get("/names", getGameMapNames); // Obtener solo los nombres de los mapas
 router.get("/", getGameMaps); // Todos los mapas
 router.get("/:id", getGameMapById); // Mapa específico por ID
