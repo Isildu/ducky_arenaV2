@@ -5,8 +5,8 @@ const cors = require("cors");
 
 const charactersRoutes = require("./routes/characters.routes");
 const playerRoutes = require("./routes/players.routes");
-const cosmeticRoutes = require("./routes/cosmetics.routes");
-const questRoutes = require("./routes/quests.routes");
+const cosmeticRoutes = require("./routes/playercosmetics.routes");
+const questRoutes = require("./routes/playerquests.routes");
 const friendRoutes = require("./routes/friends.routes");
 
 
