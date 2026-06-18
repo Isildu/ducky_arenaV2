@@ -4,6 +4,7 @@ const express = require("express");
 const cors = require("cors");
 
 const charactersRoutes = require("./routes/characters.routes.js");
+const dailyQuestRoutes = require("./routes/daily_quest.routes.js");
 
 
 const app = express();
@@ -12,6 +13,7 @@ app.use(cors());
 app.use(express.json());
 
 app.use("/api/characters", charactersRoutes);
+app.use("/api/daily-quests", dailyQuestRoutes);
 
 // Ruta de prueba para verificar que el localhost funciona
 app.get("/", (req, res) => {
