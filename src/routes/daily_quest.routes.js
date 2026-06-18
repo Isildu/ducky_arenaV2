@@ -9,7 +9,7 @@ const {
     //updateDailyQuest,
     patchDailyQuest,
     deleteDailyQuest
-} = require("../controllers/Daily_quest.controller");
+} = require("../controllers/daily_quest.controller");
 
 router.get("/reward", getReward);   // Filtrar por recompensa
 router.get("/all", getDailyQuests);               // Todos los quests completos

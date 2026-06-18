@@ -44,7 +44,7 @@ const getReward = async (req, res) => {
 // 📋 READ - Obtener solo descripcion
 const getDescription = async (req, res) => {
     try {
-        const result = await pool.query("SELECT id, description FROM ducky_arena.daily_quest ORDER BY id ASC");
+        const result = await pool.query("SELECT id, description FROM ducky_arena.daily_quest ORDER BY description ASC");
         res.status(200).json(result.rows);
     } catch (error) {
         res.status(500).json({ error: "Error al obtener las descripciones: " + error.message });
