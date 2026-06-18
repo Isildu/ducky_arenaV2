@@ -29,12 +29,12 @@ const getDailyQuestsById = async (req, res) => {
 
 // 📋 READ - Obtener quests diarios por recompensa
 const getReward = async (req, res) => {
-    const { reward_coins } = req.query;
+    const { type } = req.query;
     try {
-        if (!reward_coins) {
-            return res.status(400).json({ message: "Debes proporcionar un tipo de recompensa en la query (?reward_coins=...)" });
+        if (!type) {
+            return res.status(400).json({ message: "Debes proporcionar un tipo de recompensa en la query (?type=...)" });
         }
-        const result = await pool.query("SELECT * FROM ducky_arena.daily_quest WHERE reward_coins = $1", [reward_coins]);
+        const result = await pool.query("SELECT * FROM ducky_arena.daily_quest WHERE reward_coins = $1", [type]);
         res.status(200).json(result.rows);
     } catch (error) {
         res.status(500).json({ error: "Error al filtrar por recompensa: " + error.message });
