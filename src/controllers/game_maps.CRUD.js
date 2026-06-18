@@ -192,6 +192,8 @@ const deleteGameMap = async (req, res) => {
 module.exports = {
     getGameMaps,
     getGameMapById,
+    getGameMapsByEnvironmentType,
+    getGameMapNames,
     createGameMap,
     //updateGameMap,
     patchGameMap,

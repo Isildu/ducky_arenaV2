@@ -18,6 +18,13 @@ app.get("/", (req, res) => {
     res.send("¡El servidor de DuckyShop está vivo y funcionando!");
 });
 
+app.use((req, res) => {
+    res.status(404).json({ 
+        message: "Ruta no encontrada",
+        tip: "Prueba con /api/characters o /api/daily-quests"
+    });
+});
+
 const PORT = process.env.PORT || 3000;
 
 app.listen(PORT, () => {
