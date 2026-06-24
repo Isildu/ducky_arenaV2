@@ -8,16 +8,16 @@ const charactersRoutes = require("./routes/characters.routes");
 const dailyQuestRoutes = require("./routes/daily_quest.routes");
 const dailyGameMaps = require("./routes/game_maps.routes");
 const matchesRoutes = require("./routes/matches.routes");
-const matchPlayerRoutes = require("./routes/matchPlayers.routes");
+const matchPlayerRoutes = require("./routes/match_players.routes");
 const abilitiesRoutes = require("./routes/abilities.routes");
 const cosmeticsRoutes = require("./routes/cosmetics.routes");
-const usersRoutes = require("./routes/users.routes");
+const usersRoutes = require("./routes/auth_user.routes");
 
 // Mis rutas (Inventario, progreso y relaciones del jugador)
-const playerRoutes = require("./routes/players.routes");
-const playerCosmeticRoutes = require("./routes/playercosmetics.routes"); // Renombrado para evitar confusión
-const questRoutes = require("./routes/playerquests.routes");
-const friendRoutes = require("./routes/friends.routes");
+const playerRoutes = require("./routes/player_profile.routes");
+const playerCosmeticRoutes = require("./routes/player_cosmetics.routes"); // Renombrado para evitar confusión
+const questRoutes = require("./routes/player_quests.routes");
+const friendRoutes = require("./routes/player_friends.routes");
 
 const app = express();
 

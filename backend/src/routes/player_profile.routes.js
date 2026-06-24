@@ -6,7 +6,7 @@ const {
     createPlayerProfile,
     updatePlayerProfile,
     deletePlayerProfile
-} = require("../controllers/players.controller");
+} = require("../controllers/player_profile.controller");
 
 // Rutas específicas primero
 router.get("/all", getPlayerProfiles);

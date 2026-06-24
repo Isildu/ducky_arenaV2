@@ -7,7 +7,7 @@ const {
     assignQuest,
     updateQuestStatus,
     removeQuestFromPlayer
-} = require("../controllers/playerquests.controller");
+} = require("../controllers/player_quests.controller");
 
 // Rutas específicas primero
 router.get("/all", getPlayerQuests);

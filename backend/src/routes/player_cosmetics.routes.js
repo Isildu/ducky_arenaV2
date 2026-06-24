@@ -7,7 +7,7 @@ const {
     unlockCosmetic,
     updateCosmeticStatus,
     removeCosmeticFromPlayer
-} = require("../controllers/playercosmetics.controller");
+} = require("../controllers/player_cosmetics.controller");
 
 // Rutas específicas primero
 router.get("/all", getPlayerCosmetics);

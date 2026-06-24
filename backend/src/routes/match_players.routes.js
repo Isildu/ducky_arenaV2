@@ -10,7 +10,7 @@ const {
     createMatchPlayer,
     patchMatchPlayer,
     deleteMatchPlayer
-} = require('../controllers/matchPlayers.controller');
+} = require('../controllers/match_players.controller');
 
 // 📋 RUTAS READ (GET)
 

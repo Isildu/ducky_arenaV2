@@ -7,7 +7,7 @@ const {
     addFriendRequest,
     updateFriendStatus,
     removeFriendship
-} = require("../controllers/friends.controller");
+} = require("../controllers/player_friends.controller");
 
 // Rutas específicas primero
 router.get("/all", getGlobalFriends);
