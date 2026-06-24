@@ -5,6 +5,7 @@
  */
 const express = require("express");
 const router = express.Router();
+const validateId = require("../middleware/validate_id.middleware");
 
 const {
     getCosmetics,
@@ -15,9 +16,9 @@ const {
 } = require("../controllers/cosmetics.controller");
 
 router.get("/", getCosmetics);
-router.get("/:id", getCosmeticById);
+router.get("/:id", validateId, getCosmeticById);
 router.post("/", createCosmetic);
-router.put("/:id", updateCosmetic);
-router.delete("/:id", deleteCosmetic);
+router.put("/:id", validateId, updateCosmetic);
+router.delete("/:id", validateId, deleteCosmetic);
 
 module.exports = router;

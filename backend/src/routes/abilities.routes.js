@@ -5,6 +5,7 @@
  */
 const express = require("express");
 const router = express.Router();
+const validateId = require("../middleware/validate_id.middleware");
 
 const {
     getAbilities,
@@ -15,9 +16,9 @@ const {
 } = require("../controllers/abilities.controller");
 
 router.get("/", getAbilities);
-router.get("/:id", getAbilityById);
+router.get("/:id", validateId, getAbilityById);
 router.post("/", createAbility);
-router.put("/:id", updateAbility);
-router.delete("/:id", deleteAbility);
+router.put("/:id", validateId, updateAbility);
+router.delete("/:id", validateId, deleteAbility);
 
 module.exports = router;

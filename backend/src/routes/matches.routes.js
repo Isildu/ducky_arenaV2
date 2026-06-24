@@ -5,6 +5,7 @@
  */
 const express = require('express');
 const router = express.Router();
+const validateId = require("../middleware/validate_id.middleware");
 const {
     getMatches,
     getMatchById,
@@ -24,14 +25,14 @@ router.get('/by-game-mode', getMatchesByGameMode);
 
 router.get('/by-map', getMatchesByMapId);
 
-router.get('/:id', getMatchById);
+router.get('/:id', validateId, getMatchById);
 
 router.post('/', createMatch);
 
-router.put('/:id', patchMatch);
+router.put('/:id', validateId, patchMatch);
 
-router.patch('/:id', patchMatch);
+router.patch('/:id', validateId, patchMatch);
 
-router.delete('/:id', deleteMatch);
+router.delete('/:id', validateId, deleteMatch);
 
 module.exports = router;

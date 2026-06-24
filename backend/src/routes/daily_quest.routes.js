@@ -4,6 +4,7 @@
  * Define endpoints publicos del modulo.
  */
 const router = require("express").Router();
+const validateId = require("../middleware/validate_id.middleware");
 
 const {
     getDailyQuests,
@@ -21,14 +22,14 @@ router.get("/description", getDescription);
 
 router.get("/", getDailyQuests);
 
-router.get("/:id", getDailyQuestsById);
+router.get("/:id", validateId, getDailyQuestsById);
 
 
 router.post("/", createDailyQuest);
 
-router.put("/:id", patchDailyQuest);
-router.patch("/:id", patchDailyQuest);
+router.put("/:id", validateId, patchDailyQuest);
+router.patch("/:id", validateId, patchDailyQuest);
 
-router.delete("/:id", deleteDailyQuest);
+router.delete("/:id", validateId, deleteDailyQuest);
 
 module.exports = router;

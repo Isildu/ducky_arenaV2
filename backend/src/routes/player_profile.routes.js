@@ -4,6 +4,7 @@
  * Define endpoints publicos del modulo.
  */
 const router = require("express").Router();
+const validateId = require("../middleware/validate_id.middleware");
 
 const {
     getPlayerProfiles,
@@ -18,13 +19,13 @@ const {
 
 router.get("/all", getPlayerProfiles);
 router.get("/", getPlayerProfiles);
-router.get("/:id/dashboard", getPlayerDashboard);
-router.get("/:id/stats", getPlayerStats);
-router.get("/:id/inventory", getPlayerInventory);
+router.get("/:id/dashboard", validateId, getPlayerDashboard);
+router.get("/:id/stats", validateId, getPlayerStats);
+router.get("/:id/inventory", validateId, getPlayerInventory);
 
 router.post("/", createPlayerProfile);
-router.get("/:id", getPlayerProfileById);
-router.put("/:id", updatePlayerProfile);
-router.delete("/:id", deletePlayerProfile);
+router.get("/:id", validateId, getPlayerProfileById);
+router.put("/:id", validateId, updatePlayerProfile);
+router.delete("/:id", validateId, deletePlayerProfile);
 
 module.exports = router;

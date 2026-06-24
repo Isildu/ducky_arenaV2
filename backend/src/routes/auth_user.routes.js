@@ -5,6 +5,7 @@
  */
 const express = require("express");
 const router = express.Router();
+const validateId = require("../middleware/validate_id.middleware");
 
 const {
     getUsers,
@@ -15,9 +16,9 @@ const {
 } = require("../controllers/auth_user.controller");
 
 router.get("/", getUsers);
-router.get("/:id", getUserById);
+router.get("/:id", validateId, getUserById);
 router.post("/", createUser);
-router.put("/:id", updateUser);
-router.delete("/:id", deleteUser);
+router.put("/:id", validateId, updateUser);
+router.delete("/:id", validateId, deleteUser);
 
 module.exports = router;
