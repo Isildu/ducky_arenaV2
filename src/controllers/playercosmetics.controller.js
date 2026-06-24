@@ -30,6 +30,25 @@ const getCosmeticsByProfile = async (req, res) => {
 };
 
 // 3. POST / - Asignar/Desbloquear un cosmético a un jugador (Compra en tienda o recompensa)
+// GET /:id - Obtener una asignacion de cosmetico por su PK.
+const getPlayerCosmeticById = async (req, res) => {
+    const { id } = req.params;
+    try {
+        const result = await pool.query(
+            "SELECT * FROM ducky_arena.player_cosmetics WHERE id = $1",
+            [id]
+        );
+
+        if (result.rows.length === 0) {
+            return res.status(404).json({ message: "Registro de cosmetico no encontrado" });
+        }
+
+        res.status(200).json(result.rows[0]);
+    } catch (error) {
+        res.status(500).json({ error: "Error al obtener el cosmetico del jugador: " + error.message });
+    }
+};
+
 const unlockCosmetic = async (req, res) => {
     const { profile_id, cosmetic_id, is_unlocked } = req.body;
     try {
@@ -91,6 +110,7 @@ const removeCosmeticFromPlayer = async (req, res) => {
 module.exports = {
     getPlayerCosmetics,
     getCosmeticsByProfile,
+    getPlayerCosmeticById,
     unlockCosmetic,
     updateCosmeticStatus,
     removeCosmeticFromPlayer

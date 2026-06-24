@@ -3,6 +3,7 @@ const router = require("express").Router();
 const {
     getPlayerQuests,
     getQuestsByProfile,
+    getPlayerQuestById,
     assignQuest,
     updateQuestStatus,
     removeQuestFromPlayer
@@ -10,7 +11,9 @@ const {
 
 // Rutas específicas primero
 router.get("/all", getPlayerQuests);
+router.get("/", getPlayerQuests); // Alias de /all para CRUD READ basico
 router.get("/profile/:profile_id", getQuestsByProfile); // Panel de misiones de un jugador
+router.get("/:id", getPlayerQuestById);
 
 // Rutas dinámicas por ID de la tabla intermedia
 router.post("/", assignQuest);

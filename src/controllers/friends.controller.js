@@ -29,6 +29,25 @@ const getFriendsByProfile = async (req, res) => {
     }
 };
 
+// GET /:id - Obtener una relacion de amistad por su PK.
+const getFriendById = async (req, res) => {
+    const { id } = req.params;
+    try {
+        const result = await pool.query(
+            "SELECT * FROM ducky_arena.player_friends WHERE id = $1",
+            [id]
+        );
+
+        if (result.rows.length === 0) {
+            return res.status(404).json({ message: "Relacion de amistad no encontrada" });
+        }
+
+        res.status(200).json(result.rows[0]);
+    } catch (error) {
+        res.status(500).json({ error: "Error al obtener la relacion de amistad: " + error.message });
+    }
+};
+
 // 3. POST / - Enviar una solicitud de amistad (Crea un registro en 'PENDING')
 const addFriendRequest = async (req, res) => {
     const { character_id, profile_id, friend_id, status } = req.body;
@@ -91,6 +110,7 @@ const removeFriendship = async (req, res) => {
 module.exports = {
     getGlobalFriends,
     getFriendsByProfile,
+    getFriendById,
     addFriendRequest,
     updateFriendStatus,
     removeFriendship

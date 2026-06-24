@@ -10,6 +10,7 @@ const {
 
 // Rutas específicas primero
 router.get("/all", getPlayerProfiles);
+router.get("/", getPlayerProfiles); // Alias de /all para CRUD READ basico
 
 // Rutas base y dinámicas después
 router.post("/", createPlayerProfile);

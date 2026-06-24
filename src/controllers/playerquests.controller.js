@@ -30,6 +30,25 @@ const getQuestsByProfile = async (req, res) => {
 };
 
 // 3. POST / - Asignar una nueva misión diaria a un jugador
+// GET /:id - Obtener una mision asignada por su PK.
+const getPlayerQuestById = async (req, res) => {
+    const { id } = req.params;
+    try {
+        const result = await pool.query(
+            "SELECT * FROM ducky_arena.player_quests WHERE id = $1",
+            [id]
+        );
+
+        if (result.rows.length === 0) {
+            return res.status(404).json({ message: "Registro de mision no encontrado" });
+        }
+
+        res.status(200).json(result.rows[0]);
+    } catch (error) {
+        res.status(500).json({ error: "Error al obtener la mision del jugador: " + error.message });
+    }
+};
+
 const assignQuest = async (req, res) => {
     const { profile_id, quest_id, is_completed } = req.body;
     try {
@@ -91,6 +110,7 @@ const removeQuestFromPlayer = async (req, res) => {
 module.exports = {
     getPlayerQuests,
     getQuestsByProfile,
+    getPlayerQuestById,
     assignQuest,
     updateQuestStatus,
     removeQuestFromPlayer
