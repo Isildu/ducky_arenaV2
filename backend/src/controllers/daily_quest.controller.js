@@ -1,21 +1,23 @@
-// Asumiendo que tienes una configuración de base de datos en un archivo db.js
-const pool = require("../config/db");
+/**
+ * Controller:
+ * Gestiona peticiones HTTP relacionadas con quests diarios.
+ * Delega el acceso a datos al model.
+ */
+const DailyQuestModel = require("../models/daily_quest.model");
 
-// 📋 READ - Obtener todos los quests diarios
 const getDailyQuests = async (req, res) => {
     try {
-        const result = await pool.query("SELECT * FROM ducky_arena.daily_quest ORDER BY id ASC");
+        const result = await DailyQuestModel.findAllDailyQuests();
         res.status(200).json(result.rows);
     } catch (error) {
         res.status(500).json({ error: "Error al obtener los quests diarios: " + error.message });
     }
 };
 
-// 📋 READ - Obtener un quest diario por ID
 const getDailyQuestsById = async (req, res) => {
     const { id } = req.params;
     try {
-        const result = await pool.query("SELECT * FROM ducky_arena.daily_quest WHERE id = $1", [id]);
+        const result = await DailyQuestModel.findDailyQuestById(id);
         
         if (result.rows.length === 0) {
             return res.status(404).json({ message: "Quest diario no encontrado" });
@@ -27,7 +29,6 @@ const getDailyQuestsById = async (req, res) => {
     }
 };
 
-// 📋 READ - Obtener quests diarios por recompensa
 const getReward = async (req, res) => {
     const { reward_coins } = req.query;
 
@@ -37,39 +38,24 @@ const getReward = async (req, res) => {
         });
     }
 
-    const result = await pool.query(
-        `SELECT * FROM ducky_arena.daily_quest WHERE reward_coins = $1`,
-        [reward_coins]
-    );
-
+    const result = await DailyQuestModel.findDailyQuestsByReward(reward_coins);
     res.status(200).json(result.rows);
 };
 
-// 📋 READ - Obtener solo descripcion
 const getDescription = async (req, res) => {
     try {
-        const result = await pool.query("SELECT id, description FROM ducky_arena.daily_quest ORDER BY description ASC");
+        const result = await DailyQuestModel.findDailyQuestDescriptions();
         res.status(200).json(result.rows);
     } catch (error) {
         res.status(500).json({ error: "Error al obtener las descripciones: " + error.message });
     }
 };
 
-// ✨ CREATE - Crear nuevo quest diario
 const createDailyQuest = async (req, res) => {
     const { description, reward_coins } = req.body;
 
     try {
-        const result = await pool.query(
-            `
-            INSERT INTO ducky_arena.daily_quest
-            (description, reward_coins)
-            VALUES ($1,$2)
-            RETURNING *
-            `,
-            [description, reward_coins]
-        );
-
+        const result = await DailyQuestModel.createDailyQuest({ description, reward_coins });
         res.status(201).json(result.rows[0]);
 
     } catch (error) {
@@ -79,77 +65,16 @@ const createDailyQuest = async (req, res) => {
     }
 };
 
-// 🔄 UPDATE - Actualizar quest diario existente (COMPLETO)
-/*const updateDailyQuest = async (req, res) => {
-    const { id } = req.params;
-    const { description, reward_coins } = req.body;
-
-    try {
-        const result = await pool.query(
-            `
-            UPDATE ducky_arena.daily_quest 
-            SET 
-                description = COALESCE($1, description),
-                reward_coins = COALESCE($2, reward_coins),
-                updated_at = CURRENT_TIMESTAMP
-            WHERE id = $3
-            RETURNING *
-            `,
-            [description, reward_coins, id]
-        );
-
-        if (result.rows.length === 0) {
-            return res.status(404).json({ message: "Quest diario no encontrado para actualizar" });
-        }
-
-        res.status(200).json({
-            message: "Quest diario actualizado exitosamente",
-            dailyQuest: result.rows[0]
-        });
-
-    } catch (error) {
-        res.status(500).json({ error: "Error actualizando quest diario: " + error.message });
-    }
-};*/
-
-            
-// 🔄 UPDATE PARCIAL - Actualizar solo campos específicos (PATCH)
 const patchDailyQuest = async (req, res) => {
     const { id } = req.params;
     const updates = req.body;
 
     try {
-        // Construir dinámicamente la consulta UPDATE
-        const setClause = [];
-        const values = [];
-        let paramCount = 1;
+        const result = await DailyQuestModel.patchDailyQuest(id, updates);
 
-        // Campos permitidos para actualizar
-        const allowedFields = ['description', 'reward_coins'];
-        
-        for (const [key, value] of Object.entries(updates)) {
-            if (allowedFields.includes(key)) {
-                setClause.push(`${key} = $${paramCount}`);
-                values.push(value);
-                paramCount++;
-            }
+        if (!result) {
+            return res.status(400).json({ message: "No se proporcionaron campos vÃ¡lidos para actualizar" });
         }
-
-        if (setClause.length === 0) {
-            return res.status(400).json({ message: "No se proporcionaron campos válidos para actualizar" });
-        }
-
-        values.push(id);
-
-        const result = await pool.query(
-            `
-            UPDATE ducky_arena.daily_quest
-            SET ${setClause.join(', ')}
-            WHERE id = $${paramCount}
-            RETURNING *
-            `,
-            values
-        );
 
         if (result.rows.length === 0) {
             return res.status(404).json({ message: "Quest diario no encontrado" });
@@ -161,19 +86,15 @@ const patchDailyQuest = async (req, res) => {
         });
 
     } catch (error) {
-        res.status(500).json({ error: "Error en actualización parcial: " + error.message });
+        res.status(500).json({ error: "Error en actualizaciÃ³n parcial: " + error.message });
     }
 };
 
-// 🗑️ DELETE - Eliminar personaje (COMPLETO)
 const deleteDailyQuest = async (req, res) => {
     const { id } = req.params;
 
     try {
-        const result = await pool.query(
-            "DELETE FROM ducky_arena.daily_quest WHERE id = $1 RETURNING *",
-            [id]
-        );
+        const result = await DailyQuestModel.deleteDailyQuest(id);
 
         if (result.rows.length === 0) {
             return res.status(404).json({ message: "Quest diario no encontrado para eliminar" });
@@ -189,15 +110,12 @@ const deleteDailyQuest = async (req, res) => {
     }
 };
 
-
-// Exportamos todas las funciones
 module.exports = {
     getDailyQuests,
     getDailyQuestsById,
     getReward,
     getDescription,
     createDailyQuest,
-    //updateDailyQuest,
     patchDailyQuest,
     deleteDailyQuest
 };

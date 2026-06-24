@@ -1,10 +1,13 @@
-const pool = require("../config/db");
+/**
+ * Controller:
+ * Gestiona peticiones HTTP relacionadas con usuarios.
+ * Delega el acceso a datos al model.
+ */
+const AuthUserModel = require("../models/auth_user.model");
 
 const getUsers = async (req, res) => {
     try {
-        const result = await pool.query(
-            "SELECT id, username, email, date_joined FROM ducky_arena.auth_user ORDER BY id ASC"
-        );
+        const result = await AuthUserModel.findAllUsers();
         res.status(200).json(result.rows);
     } catch (error) {
         res.status(500).json({ error: "Error obteniendo usuarios: " + error.message });
@@ -15,10 +18,7 @@ const getUserById = async (req, res) => {
     const { id } = req.params;
 
     try {
-        const result = await pool.query(
-            "SELECT id, username, email, date_joined FROM ducky_arena.auth_user WHERE id = $1",
-            [id]
-        );
+        const result = await AuthUserModel.findUserById(id);
 
         if (result.rows.length === 0) {
             return res.status(404).json({ message: "Usuario no encontrado" });
@@ -34,16 +34,7 @@ const createUser = async (req, res) => {
     const { username, email, password } = req.body;
 
     try {
-        const result = await pool.query(
-            `
-            INSERT INTO ducky_arena.auth_user
-            (username, email, password)
-            VALUES ($1, $2, $3)
-            RETURNING id, username, email, date_joined
-            `,
-            [username, email, password]
-        );
-
+        const result = await AuthUserModel.createUser({ username, email, password });
         res.status(201).json(result.rows[0]);
     } catch (error) {
         res.status(500).json({ error: "Error creando usuario: " + error.message });
@@ -55,17 +46,7 @@ const updateUser = async (req, res) => {
     const { username, email, password } = req.body;
 
     try {
-        const result = await pool.query(
-            `
-            UPDATE ducky_arena.auth_user
-            SET username = $1,
-                email = $2,
-                password = $3
-            WHERE id = $4
-            RETURNING id, username, email, date_joined
-            `,
-            [username, email, password, id]
-        );
+        const result = await AuthUserModel.updateUser(id, { username, email, password });
 
         if (result.rows.length === 0) {
             return res.status(404).json({ message: "Usuario no encontrado" });
@@ -81,10 +62,7 @@ const deleteUser = async (req, res) => {
     const { id } = req.params;
 
     try {
-        const result = await pool.query(
-            "DELETE FROM ducky_arena.auth_user WHERE id = $1 RETURNING id, username, email, date_joined",
-            [id]
-        );
+        const result = await AuthUserModel.deleteUser(id);
 
         if (result.rows.length === 0) {
             return res.status(404).json({ message: "Usuario no encontrado" });
