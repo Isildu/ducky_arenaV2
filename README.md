@@ -54,12 +54,31 @@ routes -> controllers -> models -> PostgreSQL
 * `models/` centraliza consultas SQL.
 * `config/db.js` inicializa la conexion PostgreSQL.
 
+## Middleware Actual
+
+El backend tiene middleware basico para validaciones y errores comunes:
+
+* `validate_id.middleware.js`: valida que los parametros `:id` sean numeros enteros positivos.
+* `not_found.middleware.js`: responde rutas inexistentes con `404`.
+* `error_handler.middleware.js`: queda preparado para centralizar errores enviados con `next(error)`.
+
+Actualmente no hay middleware de autenticacion.
+
+## Integridad Minima DB-1
+
+La base de datos incluye constraints minimas para evitar datos duplicados o inconsistentes en relaciones importantes:
+
+* `unique_match_player`: evita repetir el mismo perfil dentro de la misma partida.
+* `unique_player_cosmetic`: evita repetir el mismo cosmetico para el mismo perfil.
+* `unique_player_quest`: evita repetir la misma mision para el mismo perfil.
+* `check_not_self_friend`: evita que un perfil sea amigo de si mismo.
+
 ## Estado Actual
 
 * MVC completado en los modulos actuales.
 * DB-1 integridad minima aplicada en tablas puente.
 * API-1 endpoints agregados de lectura aplicada.
-* Middleware pendiente.
+* Middleware basico completado.
 * React pendiente.
 * Auth real pendiente.
 
@@ -307,6 +326,8 @@ DELETE /api/match-players/:id
 GET    /api/ranking
 ```
 
+`/api/ranking` es un endpoint calculado. No existe una tabla `ranking`; el resultado se obtiene desde `player_profile` y `auth_user`, ordenando los perfiles por nivel y experiencia.
+
 ## Endpoints Agregados Para React
 
 ```text
@@ -347,3 +368,14 @@ curl http://localhost:3000/api/characters/1/abilities
 * No hay frontend React creado todavia; solo existe la estructura base.
 * Las consultas SQL del backend viven en `backend/src/models`.
 * No hay autenticacion real implementada todavia.
+
+## Deuda Tecnica Pendiente
+
+Estos puntos siguen pendientes y no deben asumirse como implementados:
+
+* Auth real y uso de `password_hash`.
+* Tienda con compras y transacciones.
+* Progreso avanzado de misiones.
+* Estado y resultados avanzados de partidas.
+* Preguntas y respuestas educativas.
+* Combate educativo.
