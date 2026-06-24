@@ -16,6 +16,7 @@ const playerCosmeticRoutes = require("./routes/player_cosmetics.routes");
 const questRoutes = require("./routes/player_quests.routes");
 const friendRoutes = require("./routes/player_friends.routes");
 const rankingRoutes = require("./routes/ranking.routes");
+const notFound = require("./middleware/not_found.middleware");
 
 const app = express();
 
@@ -39,6 +40,8 @@ app.use("/api/ranking", rankingRoutes);
 app.get("/", (req, res) => {
     res.send("Â¡El servidor de Ducky Arena estÃ¡ vivo y funcionando!");
 });
+
+app.use(notFound);
 
 const PORT = process.env.PORT || 3000;
 
