@@ -1,5 +1,5 @@
 // Asumiendo que tienes una configuración de base de datos en un archivo db.js
-const pool = require("../db");
+const pool = require("../config/db");
 
 // 📋 READ - Obtener todos los quests diarios
 const getDailyQuests = async (req, res) => {

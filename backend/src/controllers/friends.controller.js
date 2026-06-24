@@ -1,4 +1,4 @@
-const pool = require("../db");
+const pool = require("../config/db");
 
 // 1. GET /all - Obtener todas las relaciones de amistad del sistema
 const getGlobalFriends = async (req, res) => {

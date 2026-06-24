@@ -1,4 +1,4 @@
-const pool = require("../db");
+const pool = require("../config/db");
 
 // 1. GET /all - Obtener el historial global de misiones asignadas a todos los jugadores
 const getPlayerQuests = async (req, res) => {

@@ -1,5 +1,5 @@
 // Asumiendo que tienes una configuración de base de datos en un archivo db.js
-const pool = require("../db");
+const pool = require("../config/db");
 
 // 1. GET /all - Obtener todos los personajes
 const getCharacters = async (req, res) => {

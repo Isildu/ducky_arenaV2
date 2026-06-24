@@ -1,4 +1,4 @@
-const pool = require("../db");
+const pool = require("../config/db");
 
 // 1. GET /all - Obtener todos los perfiles de jugadores
 const getPlayerProfiles = async (req, res) => {

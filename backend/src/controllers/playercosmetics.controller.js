@@ -1,4 +1,4 @@
-const pool = require("../db");
+const pool = require("../config/db");
 
 // 1. GET /all - Obtener todo el inventario global de cosméticos asignados de los jugadores
 const getPlayerCosmetics = async (req, res) => {
