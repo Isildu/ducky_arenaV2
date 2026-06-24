@@ -1,3 +1,8 @@
+/**
+ * Routes
+ *
+ * Define endpoints publicos del modulo.
+ */
 const express = require("express");
 const router = express.Router();
 

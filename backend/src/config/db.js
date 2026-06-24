@@ -1,3 +1,9 @@
+/**
+ * Database Configuration
+ *
+ * Inicializa conexion PostgreSQL
+ * usando variables de entorno.
+ */
 const path = require("path");
 
 require("dotenv").config({

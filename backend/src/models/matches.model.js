@@ -1,7 +1,8 @@
 /**
- * Model:
- * Centraliza las consultas SQL de la tabla matches.
- * No gestiona req/res ni decisiones HTTP.
+ * Model
+ *
+ * Centraliza consultas SQL.
+ * No contiene logica HTTP.
  */
 const pool = require("../config/db");
 
@@ -78,7 +79,6 @@ const createMatch = async ({ map_id, game_mode, start_time, duration_seconds }) 
     );
 };
 
-// Construye el UPDATE parcial usando solo campos permitidos.
 const patchMatch = async (id, updates) => {
     const setClause = [];
     const values = [];

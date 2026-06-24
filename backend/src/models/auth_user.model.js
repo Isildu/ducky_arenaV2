@@ -1,7 +1,8 @@
 /**
- * Model:
- * Centraliza las consultas SQL de la tabla auth_user.
- * No gestiona req/res ni decisiones HTTP.
+ * Model
+ *
+ * Centraliza consultas SQL.
+ * No contiene logica HTTP.
  */
 const pool = require("../config/db");
 
@@ -33,7 +34,6 @@ const createUser = async ({ username, email, password }) => {
     return result;
 };
 
-// Actualiza todos los campos editables del usuario.
 const updateUser = async (id, { username, email, password }) => {
     const result = await pool.query(
         `

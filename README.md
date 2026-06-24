@@ -16,30 +16,43 @@ El proyecto usa una arquitectura cliente-servidor con backend Node.js + Express,
 
 ```text
 ducky_arenaV2/
-├── backend/
-│   ├── package.json
-│   ├── package-lock.json
-│   └── src/
-│       ├── app.js
-│       ├── config/
-│       │   └── db.js
-│       ├── controllers/
-│       ├── routes/
-│       ├── models/
-│       └── middleware/
-├── frontend/
-│   └── src/
-│       ├── components/
-│       ├── pages/
-│       └── services/
-├── database/
-│   ├── UF2175_PP_DuckiesArena.sql
-│   └── UF2176_PPDuckiesArena.sql
-├── docker-compose.yml
-├── .env.example
-├── .gitignore
-└── README.md
+|-- backend/
+|   |-- package.json
+|   |-- package-lock.json
+|   `-- src/
+|       |-- app.js
+|       |-- config/
+|       |   `-- db.js
+|       |-- controllers/
+|       |-- routes/
+|       |-- models/
+|       `-- middleware/
+|-- frontend/
+|   `-- src/
+|       |-- components/
+|       |-- pages/
+|       `-- services/
+|-- database/
+|   |-- UF2175_PP_DuckiesArena.sql
+|   `-- UF2176_PPDuckiesArena.sql
+|-- docker-compose.yml
+|-- .env.example
+|-- .gitignore
+`-- README.md
 ```
+
+## Arquitectura Backend
+
+El backend sigue una estructura MVC ligera:
+
+```text
+routes -> controllers -> models -> PostgreSQL
+```
+
+* `routes/` define endpoints publicos.
+* `controllers/` gestiona HTTP, validacion basica y respuestas.
+* `models/` centraliza consultas SQL.
+* `config/db.js` inicializa la conexion PostgreSQL.
 
 ## Tecnologias
 
@@ -122,6 +135,12 @@ Desde `backend/`:
 npm run dev
 ```
 
+En PowerShell, si la politica de ejecucion bloquea `npm.ps1`, usar:
+
+```powershell
+npm.cmd run dev
+```
+
 Servidor disponible en:
 
 ```text
@@ -184,3 +203,4 @@ curl http://localhost:3000/api/profiles
 * `backend/.env` tambien esta ignorado por seguridad, aunque la configuracion esperada vive en la raiz.
 * Ejecutar Docker antes de iniciar el backend.
 * No hay frontend React creado todavia; solo existe la estructura base.
+* Las consultas SQL del backend viven en `backend/src/models`.

@@ -1,7 +1,8 @@
 /**
- * Model:
- * Centraliza las consultas SQL de la tabla game_maps.
- * No gestiona req/res ni decisiones HTTP.
+ * Model
+ *
+ * Centraliza consultas SQL.
+ * No contiene logica HTTP.
  */
 const pool = require("../config/db");
 
@@ -38,7 +39,6 @@ const createGameMap = async ({ name, environment_type }) => {
     return result;
 };
 
-// Construye el UPDATE parcial usando solo campos permitidos.
 const patchGameMap = async (id, updates) => {
     const setClause = [];
     const values = [];

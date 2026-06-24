@@ -1,7 +1,8 @@
 /**
- * Model:
- * Centraliza las consultas SQL de la tabla abilities.
- * No gestiona req/res ni decisiones HTTP.
+ * Model
+ *
+ * Centraliza consultas SQL.
+ * No contiene logica HTTP.
  */
 const pool = require("../config/db");
 
@@ -29,7 +30,6 @@ const createAbility = async ({ character_id, input_key, name, cooldown }) => {
     return result;
 };
 
-// Actualiza todos los campos editables de la habilidad.
 const updateAbility = async (id, { character_id, input_key, name, cooldown }) => {
     const result = await pool.query(
         `

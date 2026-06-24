@@ -1,7 +1,8 @@
 /**
- * Model:
- * Centraliza las consultas SQL de la tabla characters.
- * No gestiona req/res ni decisiones HTTP.
+ * Model
+ *
+ * Centraliza consultas SQL.
+ * No contiene logica HTTP.
  */
 const pool = require("../config/db");
 
@@ -39,7 +40,6 @@ const createCharacter = async ({ name, role, base_health, attack_damage, enduran
     return result;
 };
 
-// Actualiza todos los campos editables y devuelve el registro actualizado.
 const updateCharacter = async (id, { name, role, base_health, attack_damage, endurance }) => {
     const result = await pool.query(
         `

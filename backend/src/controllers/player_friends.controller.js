@@ -1,7 +1,9 @@
 /**
- * Controller:
- * Gestiona peticiones HTTP relacionadas con amistades de jugadores.
- * Delega el acceso a datos al model.
+ * Controller
+ *
+ * Gestiona peticiones HTTP.
+ * Valida entrada basica.
+ * Delega acceso a datos al model.
  */
 const PlayerFriendsModel = require("../models/player_friends.model");
 

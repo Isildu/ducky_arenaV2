@@ -1,11 +1,12 @@
 /**
- * Controller:
- * Gestiona peticiones HTTP relacionadas con personajes.
- * Delega el acceso a datos al model.
+ * Controller
+ *
+ * Gestiona peticiones HTTP.
+ * Valida entrada basica.
+ * Delega acceso a datos al model.
  */
 const CharactersModel = require("../models/characters.model");
 
-// 1. GET /all - Obtener todos los personajes
 const getCharacters = async (req, res) => {
     try {
         const result = await CharactersModel.findAllCharacters();
@@ -15,7 +16,6 @@ const getCharacters = async (req, res) => {
     }
 };
 
-// 2. GET /:id - Obtener un personaje por su ID (Reemplaza a tu antiguo 'getId')
 const getCharactersById = async (req, res) => {
     const { id } = req.params;
     try {
@@ -25,14 +25,12 @@ const getCharactersById = async (req, res) => {
             return res.status(404).json({ message: "Personaje no encontrado" });
         }
         
-        res.status(200).json(result.rows[0]); // Devuelve el personaje con todos sus atributos (vida, ataque, etc.)
+        res.status(200).json(result.rows[0]);
     } catch (error) {
         res.status(500).json({ error: "Error al obtener el personaje: " + error.message });
     }
 };
 
-// 3. GET /role - Obtener personajes filtrados por rol (Reemplaza a 'getRole')
-// Ejemplo de uso: /characters/role?type=WARRIOR (o el ENUM que uses en character_role)
 const getRole = async (req, res) => {
     const { type } = req.query; 
     try {
@@ -46,7 +44,6 @@ const getRole = async (req, res) => {
     }
 };
 
-// 4. GET / - Obtener solo los nombres de los personajes (Para tu ruta 'getName')
 const getName = async (req, res) => {
     try {
         const result = await CharactersModel.findCharacterNames();
@@ -123,7 +120,6 @@ const deleteCharacter = async (req, res) => {
     }
 };
 
-// Exportamos exactamente lo que tu archivo de rutas necesita
 module.exports = {
     getCharacters,
     getCharactersById,

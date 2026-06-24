@@ -1,7 +1,8 @@
 /**
- * Model:
- * Centraliza las consultas SQL de la tabla daily_quest.
- * No gestiona req/res ni decisiones HTTP.
+ * Model
+ *
+ * Centraliza consultas SQL.
+ * No contiene logica HTTP.
  */
 const pool = require("../config/db");
 
@@ -41,7 +42,6 @@ const createDailyQuest = async ({ description, reward_coins }) => {
     return result;
 };
 
-// Construye el UPDATE parcial usando solo campos permitidos.
 const patchDailyQuest = async (id, updates) => {
     const setClause = [];
     const values = [];

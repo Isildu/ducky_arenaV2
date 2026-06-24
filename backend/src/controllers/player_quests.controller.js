@@ -1,7 +1,9 @@
 /**
- * Controller:
- * Gestiona peticiones HTTP relacionadas con misiones de jugadores.
- * Delega el acceso a datos al model.
+ * Controller
+ *
+ * Gestiona peticiones HTTP.
+ * Valida entrada basica.
+ * Delega acceso a datos al model.
  */
 const PlayerQuestsModel = require("../models/player_quests.model");
 

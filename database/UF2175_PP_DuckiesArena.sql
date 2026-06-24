@@ -1,9 +1,19 @@
+-- ====================================================
+-- DUCKYARENA DATABASE
+-- TABLA: esquema completo
+-- RESPONSABILIDAD: crear dominios, tablas, relaciones y datos base
+-- ====================================================
+
 DROP SCHEMA IF EXISTS ducky_arena CASCADE;
 CREATE SCHEMA ducky_arena;
 
 SET SEARCH_PATH TO ducky_arena;
 
--- DOMINIOS
+-- ====================================================
+-- DUCKYARENA DATABASE
+-- TABLA: dominios
+-- RESPONSABILIDAD: definir tipos reutilizables y restricciones comunes
+-- ====================================================
 CREATE DOMAIN positive_int AS INT
     CHECK (VALUE >= 0);
 
@@ -28,7 +38,11 @@ CREATE DOMAIN input_key_type AS VARCHAR(10)
 CREATE DOMAIN cosmetic_type AS VARCHAR(20)
     CHECK (VALUE IN ('skin', 'hat', 'weapon', 'emote'));
 
--- 1. Tabla: auth_user 
+-- ====================================================
+-- DUCKYARENA DATABASE
+-- TABLA: auth_user
+-- RESPONSABILIDAD: almacenar usuarios base de la aplicacion
+-- ====================================================
 CREATE TABLE IF NOT EXISTS auth_user (
     id SERIAL PRIMARY KEY,
     username VARCHAR(20) UNIQUE NOT NULL,
@@ -38,7 +52,11 @@ CREATE TABLE IF NOT EXISTS auth_user (
 );
 
 
--- 2. Tabla: player_profile 
+-- ====================================================
+-- DUCKYARENA DATABASE
+-- TABLA: player_profile
+-- RESPONSABILIDAD: almacenar progreso y monedas del jugador
+-- ====================================================
 CREATE TABLE IF NOT EXISTS player_profile (
     id SERIAL PRIMARY KEY,
     user_id INT UNIQUE NOT NULL REFERENCES auth_user(id) ON DELETE CASCADE,
@@ -48,14 +66,22 @@ CREATE TABLE IF NOT EXISTS player_profile (
 );
 
 
--- 3. Tabla: game_maps
+-- ====================================================
+-- DUCKYARENA DATABASE
+-- TABLA: game_maps
+-- RESPONSABILIDAD: definir mapas disponibles para partidas
+-- ====================================================
 CREATE TABLE IF NOT EXISTS game_maps (
     id SERIAL PRIMARY KEY,
     name VARCHAR(100) NOT NULL,
     environment_type VARCHAR(50) NOT NULL
 );
 
--- 4. Tabla: characters
+-- ====================================================
+-- DUCKYARENA DATABASE
+-- TABLA: characters
+-- RESPONSABILIDAD: definir personajes jugables y estadisticas base
+-- ====================================================
 CREATE TABLE IF NOT EXISTS characters (
     id SERIAL PRIMARY KEY,
     name VARCHAR(50) NOT NULL UNIQUE,
@@ -66,7 +92,11 @@ CREATE TABLE IF NOT EXISTS characters (
 );
 
 
--- 5. Tabla: abilities
+-- ====================================================
+-- DUCKYARENA DATABASE
+-- TABLA: abilities
+-- RESPONSABILIDAD: definir habilidades asociadas a personajes
+-- ====================================================
 CREATE TABLE IF NOT EXISTS abilities (
     id SERIAL PRIMARY KEY,
     character_id INT NOT NULL,
@@ -79,7 +109,11 @@ CREATE TABLE IF NOT EXISTS abilities (
         ON DELETE CASCADE
 );
 
--- 6. Tabla: matches
+-- ====================================================
+-- DUCKYARENA DATABASE
+-- TABLA: matches
+-- RESPONSABILIDAD: registrar partidas disputadas
+-- ====================================================
 CREATE TABLE IF NOT EXISTS matches (
     id SERIAL PRIMARY KEY,
     map_id INT NOT NULL,
@@ -92,7 +126,11 @@ CREATE TABLE IF NOT EXISTS matches (
         ON DELETE RESTRICT
 );
 
--- 7. Tabla: match_players
+-- ====================================================
+-- DUCKYARENA DATABASE
+-- TABLA: match_players
+-- RESPONSABILIDAD: relacionar jugadores, personajes y estadisticas por partida
+-- ====================================================
 CREATE TABLE IF NOT EXISTS match_players (
     id SERIAL PRIMARY KEY,
     match_id INT NOT NULL,
@@ -116,7 +154,11 @@ CREATE TABLE IF NOT EXISTS match_players (
         ON DELETE CASCADE
 );
 
--- 8. Tabla: player_friends
+-- ====================================================
+-- DUCKYARENA DATABASE
+-- TABLA: player_friends
+-- RESPONSABILIDAD: almacenar relaciones de amistad entre perfiles
+-- ====================================================
 -- NOTA: Relaciona perfiles entre sí. 'profile_id' y 'friend_id' apuntan a 'player_profile'.
 CREATE TABLE IF NOT EXISTS player_friends (
     id SERIAL PRIMARY KEY,
@@ -134,7 +176,11 @@ CREATE TABLE IF NOT EXISTS player_friends (
     CONSTRAINT fk_friends_friend FOREIGN KEY (friend_id) REFERENCES player_profile(id)
 );
 
--- 9. Tabla: cosmetics
+-- ====================================================
+-- DUCKYARENA DATABASE
+-- TABLA: cosmetics
+-- RESPONSABILIDAD: definir cosmeticos disponibles
+-- ====================================================
 CREATE TABLE IF NOT EXISTS cosmetics (
     id SERIAL PRIMARY KEY,
     name VARCHAR(20) NOT NULL,
@@ -143,7 +189,11 @@ CREATE TABLE IF NOT EXISTS cosmetics (
 	img_url VARCHAR(255)
 );
 
--- 10. Tabla: player_cosmetics
+-- ====================================================
+-- DUCKYARENA DATABASE
+-- TABLA: player_cosmetics
+-- RESPONSABILIDAD: relacionar cosmeticos desbloqueados con perfiles
+-- ====================================================
 CREATE TABLE IF NOT EXISTS player_cosmetics (
     id SERIAL PRIMARY KEY,
     profile_id INT NOT NULL REFERENCES player_profile(id) ON DELETE CASCADE,
@@ -151,14 +201,22 @@ CREATE TABLE IF NOT EXISTS player_cosmetics (
     is_unlocked BOOLEAN DEFAULT FALSE
 );
 
--- 11. Tabla: daily_quest
+-- ====================================================
+-- DUCKYARENA DATABASE
+-- TABLA: daily_quest
+-- RESPONSABILIDAD: definir misiones diarias y recompensas
+-- ====================================================
 CREATE TABLE IF NOT EXISTS daily_quest (
     id SERIAL PRIMARY KEY,
     description VARCHAR(200),
     reward_coins positive_int DEFAULT 10
 );
 
--- 12. Tabla: player_quests
+-- ====================================================
+-- DUCKYARENA DATABASE
+-- TABLA: player_quests
+-- RESPONSABILIDAD: relacionar misiones asignadas con perfiles
+-- ====================================================
 CREATE TABLE IF NOT EXISTS player_quests (
     id SERIAL PRIMARY KEY,
     profile_id INT NOT NULL REFERENCES player_profile(id) ON DELETE CASCADE,

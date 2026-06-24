@@ -1,7 +1,9 @@
 /**
- * Controller:
- * Gestiona peticiones HTTP relacionadas con mapas de juego.
- * Delega el acceso a datos al model.
+ * Controller
+ *
+ * Gestiona peticiones HTTP.
+ * Valida entrada basica.
+ * Delega acceso a datos al model.
  */
 const GameMapsModel = require("../models/game_maps.model");
 

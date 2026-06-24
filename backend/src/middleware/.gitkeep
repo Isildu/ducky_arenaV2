@@ -1,1 +1,5 @@
-
+/**
+ * Middleware
+ *
+ * Ejecuta validaciones o logica transversal.
+ */

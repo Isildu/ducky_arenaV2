@@ -1,30 +1,30 @@
 version: '3.8'
 
 services:
-  # Servicio 1: La Base de Datos PostgreSQL
+  # Base de datos PostgreSQL usada por el backend.
   db:
     image: postgres:15-alpine
-    container_name: duckies_postgres_db # host name
+    container_name: duckies_postgres_db
     restart: always
     environment:
-      POSTGRES_DB: duckies_arena_db # general name / maintenance db
+      POSTGRES_DB: duckies_arena_db
       POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: ducky_secret_pass123  # ⚠️ Pon la misma contraseña que pusiste en el settings.py de Django
+      POSTGRES_PASSWORD: ducky_secret_pass123
     ports:
       - "5432:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
 
-  # Servicio 2: La interfaz gráfica pgAdmin
+  # Interfaz grafica para administrar PostgreSQL.
   pgadmin:
     image: dpage/pgadmin4
     container_name: duckies_pgadmin
     restart: always
     environment:
-      PGADMIN_DEFAULT_EMAIL: admin@duckies.com  # El correo que usarás para iniciar sesión en pgAdmin
-      PGADMIN_DEFAULT_PASSWORD: admin_password   # La contraseña para entrar a pgAdmin
+      PGADMIN_DEFAULT_EMAIL: admin@duckies.com
+      PGADMIN_DEFAULT_PASSWORD: admin_password
     ports:
-      - "8080:80"  # Entrarás desde el navegador usando http://localhost:8080
+      - "8080:80"
     depends_on:
       - db
 

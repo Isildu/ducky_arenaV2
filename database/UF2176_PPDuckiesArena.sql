@@ -1,3 +1,9 @@
+-- ====================================================
+-- DUCKYARENA DATABASE
+-- TABLA: consultas de apoyo
+-- RESPONSABILIDAD: documentar consultas utiles de analisis y usuario
+-- ====================================================
+
 SET SEARCH_PATH TO ducky_arena;
 
 --Consultas para administrador / análisis  
@@ -132,6 +138,5 @@ FROM abilities a
 JOIN characters c
 ON a.character_id = c.id
 ORDER BY c.name, a.input_key;
-
 
 

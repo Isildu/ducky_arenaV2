@@ -1,7 +1,9 @@
 /**
- * Controller:
- * Gestiona peticiones HTTP relacionadas con partidas.
- * Delega el acceso a datos al model.
+ * Controller
+ *
+ * Gestiona peticiones HTTP.
+ * Valida entrada basica.
+ * Delega acceso a datos al model.
  */
 const MatchesModel = require("../models/matches.model");
 

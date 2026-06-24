@@ -1,7 +1,8 @@
 /**
- * Model:
- * Centraliza las consultas SQL de la tabla cosmetics.
- * No gestiona req/res ni decisiones HTTP.
+ * Model
+ *
+ * Centraliza consultas SQL.
+ * No contiene logica HTTP.
  */
 const pool = require("../config/db");
 
@@ -29,7 +30,6 @@ const createCosmetic = async ({ name, type, price, img_url }) => {
     return result;
 };
 
-// Actualiza todos los campos editables del cosmetico.
 const updateCosmetic = async (id, { name, type, price, img_url }) => {
     const result = await pool.query(
         `

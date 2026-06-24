@@ -1,3 +1,8 @@
+/**
+ * Routes
+ *
+ * Define endpoints publicos del modulo.
+ */
 const router = require("express").Router();
 
 const {
@@ -10,20 +15,19 @@ const {
     deleteDailyQuest
 } = require("../controllers/daily_quest.controller");
 
-router.get("/reward", getReward);   // Filtrar por recompensa
-router.get("/all", getDailyQuests);               // Todos los quests completos
-router.get("/description", getDescription); // Filtrar por descripción
+router.get("/reward", getReward);
+router.get("/all", getDailyQuests);
+router.get("/description", getDescription);
 
-router.get("/", getDailyQuests);                  // Todos los quests (id y nombre)
+router.get("/", getDailyQuests);
 
-router.get("/:id", getDailyQuestsById);           // Quest específico por ID
+router.get("/:id", getDailyQuestsById);
 
 
 router.post("/", createDailyQuest);
 
-// PUT reutiliza la actualizacion parcial existente para mantener compatibilidad.
 router.put("/:id", patchDailyQuest);
-router.patch("/:id", patchDailyQuest);   // Actualización parcial
+router.patch("/:id", patchDailyQuest);
 
 router.delete("/:id", deleteDailyQuest);
 

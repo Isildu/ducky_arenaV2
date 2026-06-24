@@ -1,3 +1,8 @@
+/**
+ * Routes
+ *
+ * Define endpoints publicos del modulo.
+ */
 const router = require("express").Router();
 
 const {
@@ -9,13 +14,11 @@ const {
     removeFriendship
 } = require("../controllers/player_friends.controller");
 
-// Rutas específicas primero
 router.get("/all", getGlobalFriends);
-router.get("/", getGlobalFriends); // Alias de /all para CRUD READ basico
-router.get("/profile/:profile_id", getFriendsByProfile); // Ver amigos de un jugador
+router.get("/", getGlobalFriends);
+router.get("/profile/:profile_id", getFriendsByProfile);
 router.get("/:id", getFriendById);
 
-// Rutas de cambio de estado y eliminación
 router.post("/", addFriendRequest);
 router.put("/:id", updateFriendStatus);
 router.delete("/:id", removeFriendship);
