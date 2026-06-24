@@ -151,7 +151,8 @@ CREATE TABLE IF NOT EXISTS match_players (
     CONSTRAINT fk_match_players_profile
         FOREIGN KEY (profile_id)
         REFERENCES player_profile(id)
-        ON DELETE CASCADE
+        ON DELETE CASCADE,
+    CONSTRAINT unique_match_player UNIQUE (match_id, profile_id)
 );
 
 -- ====================================================
@@ -171,6 +172,7 @@ CREATE TABLE IF NOT EXISTS player_friends (
         REFERENCES characters(id)
         ON DELETE RESTRICT,
     CONSTRAINT unique_friendship UNIQUE (profile_id, friend_id),
+    CONSTRAINT check_not_self_friend CHECK (profile_id <> friend_id),
     -- Al igual que antes, las FKs a player_profile quedan pendientes de la parte de tu compañero:
     CONSTRAINT fk_friends_profile FOREIGN KEY (profile_id) REFERENCES player_profile(id),
     CONSTRAINT fk_friends_friend FOREIGN KEY (friend_id) REFERENCES player_profile(id)
@@ -198,7 +200,8 @@ CREATE TABLE IF NOT EXISTS player_cosmetics (
     id SERIAL PRIMARY KEY,
     profile_id INT NOT NULL REFERENCES player_profile(id) ON DELETE CASCADE,
     cosmetic_id INT NOT NULL REFERENCES cosmetics(id) ON DELETE CASCADE,
-    is_unlocked BOOLEAN DEFAULT FALSE
+    is_unlocked BOOLEAN DEFAULT FALSE,
+    CONSTRAINT unique_player_cosmetic UNIQUE (profile_id, cosmetic_id)
 );
 
 -- ====================================================
@@ -221,7 +224,8 @@ CREATE TABLE IF NOT EXISTS player_quests (
     id SERIAL PRIMARY KEY,
     profile_id INT NOT NULL REFERENCES player_profile(id) ON DELETE CASCADE,
     quest_id INT NOT NULL REFERENCES daily_quest(id) ON DELETE CASCADE,
-    is_completed BOOLEAN DEFAULT FALSE
+    is_completed BOOLEAN DEFAULT FALSE,
+    CONSTRAINT unique_player_quest UNIQUE (profile_id, quest_id)
 );
 -- ===========================================================================
 -- Índices sugeridos para optimizar el rendimiento del matchmaking y estadísticas
