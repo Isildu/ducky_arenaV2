@@ -17,6 +17,7 @@ const questRoutes = require("./routes/player_quests.routes");
 const friendRoutes = require("./routes/player_friends.routes");
 const rankingRoutes = require("./routes/ranking.routes");
 const notFound = require("./middleware/not_found.middleware");
+const errorHandler = require("./middleware/error_handler.middleware");
 
 const app = express();
 
@@ -42,6 +43,7 @@ app.get("/", (req, res) => {
 });
 
 app.use(notFound);
+app.use(errorHandler);
 
 const PORT = process.env.PORT || 3000;
 
