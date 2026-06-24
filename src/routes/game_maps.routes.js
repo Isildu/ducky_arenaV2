@@ -6,7 +6,6 @@ const {
     getGameMapsByEnvironmentType,
     getGameMapNames,
     createGameMap,
-    //updateGameMap,
     patchGameMap,
     deleteGameMap
 } = require("../controllers/game_maps.controller.js");
@@ -18,7 +17,8 @@ router.get("/:id", getGameMapById); // Mapa específico por ID
 
 router.post("/", createGameMap);
 
-//router.put("/:id", updateGameMap);    // Actualización completa
+// PUT reutiliza la actualizacion parcial existente para mantener compatibilidad.
+router.put("/:id", patchGameMap);
 router.patch("/:id", patchGameMap);   // Actualización parcial
 
 router.delete("/:id", deleteGameMap);

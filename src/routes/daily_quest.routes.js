@@ -6,7 +6,6 @@ const {
     getReward,
     getDescription,
     createDailyQuest,
-    //updateDailyQuest,
     patchDailyQuest,
     deleteDailyQuest
 } = require("../controllers/daily_quest.controller");
@@ -22,7 +21,8 @@ router.get("/:id", getDailyQuestsById);           // Quest específico por ID
 
 router.post("/", createDailyQuest);
 
-//router.put("/:id", updateDailyQuest);    // Actualización completa
+// PUT reutiliza la actualizacion parcial existente para mantener compatibilidad.
+router.put("/:id", patchDailyQuest);
 router.patch("/:id", patchDailyQuest);   // Actualización parcial
 
 router.delete("/:id", deleteDailyQuest);

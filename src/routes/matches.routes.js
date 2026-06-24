@@ -31,6 +31,9 @@ router.get('/:id', getMatchById);
 // ✨ RUTA CREATE (POST)
 router.post('/', createMatch);
 
+// PUT reutiliza la actualizacion parcial existente para mantener compatibilidad.
+router.put('/:id', patchMatch);
+
 // 🔄 RUTA UPDATE PARCIAL (PATCH)
 router.patch('/:id', patchMatch);
 

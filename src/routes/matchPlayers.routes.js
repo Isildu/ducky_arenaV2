@@ -35,6 +35,9 @@ router.get('/:id', getMatchPlayerById);
 // ✨ CREATE - Agregar jugador a partida
 router.post('/', createMatchPlayer);
 
+// PUT reutiliza la actualizacion parcial existente para mantener compatibilidad.
+router.put('/:id', patchMatchPlayer);
+
 // 🔄 UPDATE - Actualización parcial
 router.patch('/:id', patchMatchPlayer);
 
