@@ -1,11 +1,16 @@
-const pool = require("../config/db");
+/**
+ * Controller:
+ * Gestiona peticiones HTTP relacionadas con cosmeticos.
+ * Delega el acceso a datos al model.
+ */
+const CosmeticsModel = require("../models/cosmetics.model");
 
 const getCosmetics = async (req, res) => {
     try {
-        const result = await pool.query("SELECT * FROM ducky_arena.cosmetics ORDER BY id ASC");
+        const result = await CosmeticsModel.findAllCosmetics();
         res.status(200).json(result.rows);
     } catch (error) {
-        res.status(500).json({ error: "Error obteniendo cosméticos: " + error.message });
+        res.status(500).json({ error: "Error obteniendo cosmÃ©ticos: " + error.message });
     }
 };
 
@@ -13,15 +18,15 @@ const getCosmeticById = async (req, res) => {
     const { id } = req.params;
 
     try {
-        const result = await pool.query("SELECT * FROM ducky_arena.cosmetics WHERE id = $1", [id]);
+        const result = await CosmeticsModel.findCosmeticById(id);
 
         if (result.rows.length === 0) {
-            return res.status(404).json({ message: "Cosmético no encontrado" });
+            return res.status(404).json({ message: "CosmÃ©tico no encontrado" });
         }
 
         res.status(200).json(result.rows[0]);
     } catch (error) {
-        res.status(500).json({ error: "Error obteniendo cosmético: " + error.message });
+        res.status(500).json({ error: "Error obteniendo cosmÃ©tico: " + error.message });
     }
 };
 
@@ -29,19 +34,16 @@ const createCosmetic = async (req, res) => {
     const { name, type, price, img_url } = req.body;
 
     try {
-        const result = await pool.query(
-            `
-            INSERT INTO ducky_arena.cosmetics
-            (name, type, price, img_url)
-            VALUES ($1, $2, $3, $4)
-            RETURNING *
-            `,
-            [name, type, price, img_url]
-        );
+        const result = await CosmeticsModel.createCosmetic({
+            name,
+            type,
+            price,
+            img_url
+        });
 
         res.status(201).json(result.rows[0]);
     } catch (error) {
-        res.status(500).json({ error: "Error creando cosmético: " + error.message });
+        res.status(500).json({ error: "Error creando cosmÃ©tico: " + error.message });
     }
 };
 
@@ -50,26 +52,20 @@ const updateCosmetic = async (req, res) => {
     const { name, type, price, img_url } = req.body;
 
     try {
-        const result = await pool.query(
-            `
-            UPDATE ducky_arena.cosmetics
-            SET name = $1,
-                type = $2,
-                price = $3,
-                img_url = $4
-            WHERE id = $5
-            RETURNING *
-            `,
-            [name, type, price, img_url, id]
-        );
+        const result = await CosmeticsModel.updateCosmetic(id, {
+            name,
+            type,
+            price,
+            img_url
+        });
 
         if (result.rows.length === 0) {
-            return res.status(404).json({ message: "Cosmético no encontrado" });
+            return res.status(404).json({ message: "CosmÃ©tico no encontrado" });
         }
 
         res.status(200).json(result.rows[0]);
     } catch (error) {
-        res.status(500).json({ error: "Error actualizando cosmético: " + error.message });
+        res.status(500).json({ error: "Error actualizando cosmÃ©tico: " + error.message });
     }
 };
 
@@ -77,21 +73,18 @@ const deleteCosmetic = async (req, res) => {
     const { id } = req.params;
 
     try {
-        const result = await pool.query(
-            "DELETE FROM ducky_arena.cosmetics WHERE id = $1 RETURNING *",
-            [id]
-        );
+        const result = await CosmeticsModel.deleteCosmetic(id);
 
         if (result.rows.length === 0) {
-            return res.status(404).json({ message: "Cosmético no encontrado" });
+            return res.status(404).json({ message: "CosmÃ©tico no encontrado" });
         }
 
         res.status(200).json({
-            message: "Cosmético eliminado correctamente",
+            message: "CosmÃ©tico eliminado correctamente",
             cosmetic: result.rows[0]
         });
     } catch (error) {
-        res.status(500).json({ error: "Error eliminando cosmético: " + error.message });
+        res.status(500).json({ error: "Error eliminando cosmÃ©tico: " + error.message });
     }
 };
 

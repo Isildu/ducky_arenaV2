@@ -1,8 +1,13 @@
-const pool = require("../config/db");
+/**
+ * Controller:
+ * Gestiona peticiones HTTP relacionadas con habilidades.
+ * Delega el acceso a datos al model.
+ */
+const AbilitiesModel = require("../models/abilities.model");
 
 const getAbilities = async (req, res) => {
     try {
-        const result = await pool.query("SELECT * FROM ducky_arena.abilities ORDER BY id ASC");
+        const result = await AbilitiesModel.findAllAbilities();
         res.status(200).json(result.rows);
     } catch (error) {
         res.status(500).json({ error: "Error obteniendo habilidades: " + error.message });
@@ -13,7 +18,7 @@ const getAbilityById = async (req, res) => {
     const { id } = req.params;
 
     try {
-        const result = await pool.query("SELECT * FROM ducky_arena.abilities WHERE id = $1", [id]);
+        const result = await AbilitiesModel.findAbilityById(id);
 
         if (result.rows.length === 0) {
             return res.status(404).json({ message: "Habilidad no encontrada" });
@@ -29,15 +34,12 @@ const createAbility = async (req, res) => {
     const { character_id, input_key, name, cooldown } = req.body;
 
     try {
-        const result = await pool.query(
-            `
-            INSERT INTO ducky_arena.abilities
-            (character_id, input_key, name, cooldown)
-            VALUES ($1, $2, $3, $4)
-            RETURNING *
-            `,
-            [character_id, input_key, name, cooldown]
-        );
+        const result = await AbilitiesModel.createAbility({
+            character_id,
+            input_key,
+            name,
+            cooldown
+        });
 
         res.status(201).json(result.rows[0]);
     } catch (error) {
@@ -50,18 +52,12 @@ const updateAbility = async (req, res) => {
     const { character_id, input_key, name, cooldown } = req.body;
 
     try {
-        const result = await pool.query(
-            `
-            UPDATE ducky_arena.abilities
-            SET character_id = $1,
-                input_key = $2,
-                name = $3,
-                cooldown = $4
-            WHERE id = $5
-            RETURNING *
-            `,
-            [character_id, input_key, name, cooldown, id]
-        );
+        const result = await AbilitiesModel.updateAbility(id, {
+            character_id,
+            input_key,
+            name,
+            cooldown
+        });
 
         if (result.rows.length === 0) {
             return res.status(404).json({ message: "Habilidad no encontrada" });
@@ -77,10 +73,7 @@ const deleteAbility = async (req, res) => {
     const { id } = req.params;
 
     try {
-        const result = await pool.query(
-            "DELETE FROM ducky_arena.abilities WHERE id = $1 RETURNING *",
-            [id]
-        );
+        const result = await AbilitiesModel.deleteAbility(id);
 
         if (result.rows.length === 0) {
             return res.status(404).json({ message: "Habilidad no encontrada" });
