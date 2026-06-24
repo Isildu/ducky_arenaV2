@@ -34,7 +34,7 @@ ducky_arenaV2/
 |       `-- services/
 |-- database/
 |   |-- UF2175_PP_DuckiesArena.sql
-|   `-- UF2176_PPDuckiesArena.sql
+|   `-- UF2176_PP_DuckiesArena.sql
 |-- docker-compose.yml
 |-- .env.example
 |-- .gitignore
@@ -49,10 +49,19 @@ El backend sigue una estructura MVC ligera:
 routes -> controllers -> models -> PostgreSQL
 ```
 
-* `routes/` define endpoints publicos.
-* `controllers/` gestiona HTTP, validacion basica y respuestas.
+* `routes/` define endpoints publicos del backend.
+* `controllers/` gestiona peticiones HTTP, validacion basica y respuestas.
 * `models/` centraliza consultas SQL.
 * `config/db.js` inicializa la conexion PostgreSQL.
+
+## Estado Actual
+
+* MVC completado en los modulos actuales.
+* DB-1 integridad minima aplicada en tablas puente.
+* API-1 endpoints agregados de lectura aplicada.
+* Middleware pendiente.
+* React pendiente.
+* Auth real pendiente.
 
 ## Tecnologias
 
@@ -113,10 +122,10 @@ Get-Content .\database\UF2175_PP_DuckiesArena.sql |
 docker exec -i duckies_postgres_db psql -U postgres -d duckies_arena_db
 ```
 
-Si tambien necesitas ejecutar el segundo script:
+Consultas de apoyo:
 
 ```powershell
-Get-Content .\database\UF2176_PPDuckiesArena.sql |
+Get-Content .\database\UF2176_PP_DuckiesArena.sql |
 docker exec -i duckies_postgres_db psql -U postgres -d duckies_arena_db
 ```
 
@@ -131,12 +140,6 @@ npm install
 
 Desde `backend/`:
 
-```bash
-npm run dev
-```
-
-En PowerShell, si la politica de ejecucion bloquea `npm.ps1`, usar:
-
 ```powershell
 npm.cmd run dev
 ```
@@ -149,27 +152,42 @@ http://localhost:3000
 
 ## API REST
 
-Endpoints principales:
+### Characters
 
 ```text
 GET    /api/characters
+GET    /api/characters/all
+GET    /api/characters/role?type=Hacker
 GET    /api/characters/:id
+GET    /api/characters/:id/abilities
 POST   /api/characters
 PUT    /api/characters/:id
 DELETE /api/characters/:id
+```
 
+### Abilities
+
+```text
 GET    /api/abilities
 GET    /api/abilities/:id
 POST   /api/abilities
 PUT    /api/abilities/:id
 DELETE /api/abilities/:id
+```
 
+### Cosmetics
+
+```text
 GET    /api/cosmetics
 GET    /api/cosmetics/:id
 POST   /api/cosmetics
 PUT    /api/cosmetics/:id
 DELETE /api/cosmetics/:id
+```
 
+### Users
+
+```text
 GET    /api/users
 GET    /api/users/:id
 POST   /api/users
@@ -177,7 +195,127 @@ PUT    /api/users/:id
 DELETE /api/users/:id
 ```
 
-Tambien existen rutas para perfiles, amistades, misiones, mapas, partidas y jugadores de partida.
+### Profiles
+
+```text
+GET    /api/profiles
+GET    /api/profiles/all
+GET    /api/profiles/:id
+GET    /api/profiles/:id/dashboard
+GET    /api/profiles/:id/stats
+GET    /api/profiles/:id/inventory
+POST   /api/profiles
+PUT    /api/profiles/:id
+DELETE /api/profiles/:id
+```
+
+### Player Friends
+
+```text
+GET    /api/player-friends
+GET    /api/player-friends/all
+GET    /api/player-friends/:id
+GET    /api/player-friends/profile/:profile_id
+POST   /api/player-friends
+PUT    /api/player-friends/:id
+DELETE /api/player-friends/:id
+```
+
+### Player Cosmetics
+
+```text
+GET    /api/player-cosmetics
+GET    /api/player-cosmetics/all
+GET    /api/player-cosmetics/:id
+GET    /api/player-cosmetics/profile/:profile_id
+POST   /api/player-cosmetics
+PUT    /api/player-cosmetics/:id
+DELETE /api/player-cosmetics/:id
+```
+
+### Player Quests
+
+```text
+GET    /api/player-quests
+GET    /api/player-quests/all
+GET    /api/player-quests/:id
+GET    /api/player-quests/profile/:profile_id
+POST   /api/player-quests
+PUT    /api/player-quests/:id
+DELETE /api/player-quests/:id
+```
+
+### Daily Quest
+
+```text
+GET    /api/daily-quest
+GET    /api/daily-quest/all
+GET    /api/daily-quest/:id
+GET    /api/daily-quest/reward?reward_coins=50
+GET    /api/daily-quest/description
+POST   /api/daily-quest
+PUT    /api/daily-quest/:id
+PATCH  /api/daily-quest/:id
+DELETE /api/daily-quest/:id
+```
+
+### Game Maps
+
+```text
+GET    /api/game-maps
+GET    /api/game-maps/:id
+GET    /api/game-maps/environment?environment_type=Tropical
+GET    /api/game-maps/names
+POST   /api/game-maps
+PUT    /api/game-maps/:id
+PATCH  /api/game-maps/:id
+DELETE /api/game-maps/:id
+```
+
+### Matches
+
+```text
+GET    /api/matches
+GET    /api/matches/:id
+GET    /api/matches/basic
+GET    /api/matches/by-game-mode?game_mode=Duelo
+GET    /api/matches/by-map?map_id=1
+POST   /api/matches
+PUT    /api/matches/:id
+PATCH  /api/matches/:id
+DELETE /api/matches/:id
+```
+
+### Match Players
+
+```text
+GET    /api/match-players
+GET    /api/match-players/:id
+GET    /api/match-players/by-match?match_id=1
+GET    /api/match-players/by-team?match_id=1&team=BLUE
+GET    /api/match-players/winners?match_id=1
+GET    /api/match-players/player-stats?profile_id=1
+POST   /api/match-players
+PUT    /api/match-players/:id
+PATCH  /api/match-players/:id
+DELETE /api/match-players/:id
+```
+
+### Ranking
+
+```text
+GET    /api/ranking
+```
+
+## Endpoints Agregados Para React
+
+```text
+GET /api/profiles/:id/dashboard
+GET /api/profiles/:id/stats
+GET /api/profiles/:id/inventory
+GET /api/ranking
+GET /api/characters/:id/abilities
+```
 
 ## Comandos Utiles
 
@@ -193,8 +331,12 @@ Probar API:
 
 ```bash
 curl http://localhost:3000/
-curl http://localhost:3000/api/characters
-curl http://localhost:3000/api/profiles
+curl http://localhost:3000/api/characters/all
+curl http://localhost:3000/api/profiles/1/dashboard
+curl http://localhost:3000/api/profiles/1/stats
+curl http://localhost:3000/api/profiles/1/inventory
+curl http://localhost:3000/api/ranking
+curl http://localhost:3000/api/characters/1/abilities
 ```
 
 ## Notas Tecnicas
@@ -204,3 +346,4 @@ curl http://localhost:3000/api/profiles
 * Ejecutar Docker antes de iniciar el backend.
 * No hay frontend React creado todavia; solo existe la estructura base.
 * Las consultas SQL del backend viven en `backend/src/models`.
+* No hay autenticacion real implementada todavia.
