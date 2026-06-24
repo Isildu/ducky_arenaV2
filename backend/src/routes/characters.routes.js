@@ -8,6 +8,7 @@ const router = require("express").Router();
 const {
     getCharacters,
     getCharactersById,
+    getCharacterAbilities,
     getRole,
     getName,
     createCharacter,
@@ -18,6 +19,7 @@ const {
 router.get("/", getName);
 router.get("/role", getRole);
 router.get("/all", getCharacters);
+router.get("/:id/abilities", getCharacterAbilities);
 router.get("/:id", getCharactersById);
 
 router.post("/", createCharacter);

@@ -31,6 +31,25 @@ const getCharactersById = async (req, res) => {
     }
 };
 
+const getCharacterAbilities = async (req, res) => {
+    const { id } = req.params;
+    try {
+        const character = await CharactersModel.findCharacterById(id);
+
+        if (character.rows.length === 0) {
+            return res.status(404).json({ message: "Personaje no encontrado" });
+        }
+
+        const abilities = await CharactersModel.findAbilitiesByCharacterId(id);
+        res.status(200).json({
+            character: character.rows[0],
+            abilities: abilities.rows
+        });
+    } catch (error) {
+        res.status(500).json({ error: "Error al obtener habilidades del personaje: " + error.message });
+    }
+};
+
 const getRole = async (req, res) => {
     const { type } = req.query; 
     try {
@@ -123,6 +142,7 @@ const deleteCharacter = async (req, res) => {
 module.exports = {
     getCharacters,
     getCharactersById,
+    getCharacterAbilities,
     getRole,
     getName,
     createCharacter,

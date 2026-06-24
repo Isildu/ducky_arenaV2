@@ -16,6 +16,14 @@ const findCharacterById = async (id) => {
     return result;
 };
 
+const findAbilitiesByCharacterId = async (id) => {
+    const result = await pool.query(
+        "SELECT * FROM ducky_arena.abilities WHERE character_id = $1 ORDER BY input_key ASC",
+        [id]
+    );
+    return result;
+};
+
 const findCharactersByRole = async (type) => {
     const result = await pool.query("SELECT * FROM ducky_arena.characters WHERE role = $1", [type]);
     return result;
@@ -70,6 +78,7 @@ const deleteCharacter = async (id) => {
 module.exports = {
     findAllCharacters,
     findCharacterById,
+    findAbilitiesByCharacterId,
     findCharactersByRole,
     findCharacterNames,
     createCharacter,
