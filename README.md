@@ -112,11 +112,12 @@ DB_HOST=localhost
 DB_PORT=5432
 DB_NAME=duckies_arena_db
 DB_USER=postgres
-DB_PASSWORD=TU_PASSWORD_AQUI
+DB_PASSWORD=ducky_secret_pass123
 PORT=3000
 ```
 
 El backend carga este archivo desde la raiz del monorepo.
+`DB_PASSWORD` debe coincidir con `POSTGRES_PASSWORD` en `docker-compose.yml`.
 
 ### 3. Levantar PostgreSQL y pgAdmin
 
@@ -129,10 +130,28 @@ docker compose up -d
 Comprobar contenedores:
 
 ```bash
-docker ps
+docker compose ps
 ```
 
+pgAdmin queda disponible en:
+
+```text
+http://localhost:8080
+```
+
+Credenciales de pgAdmin:
+
+```text
+Email: admin@duckies.com
+Password: admin_password
+```
+
+El servidor PostgreSQL aparece registrado automaticamente en pgAdmin como `Duckies Arena PostgreSQL`.
+La configuracion de pgAdmin se conserva entre reinicios mediante un volumen Docker.
+
 ### 4. Importar base de datos
+
+La importacion SQL sigue siendo manual por ahora. No hay inicializacion automatica desde Docker.
 
 PowerShell:
 

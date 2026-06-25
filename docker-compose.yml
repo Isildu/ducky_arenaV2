@@ -1,5 +1,3 @@
-version: '3.8'
-
 services:
   # Base de datos PostgreSQL usada por el backend.
   db:
@@ -25,8 +23,12 @@ services:
       PGADMIN_DEFAULT_PASSWORD: admin_password
     ports:
       - "8080:80"
+    volumes:
+      - pgadmin_data:/var/lib/pgadmin
+      - ./docker/pgadmin/servers.json:/pgadmin4/servers.json:ro
     depends_on:
       - db
 
 volumes:
   postgres_data:
+  pgadmin_data:
