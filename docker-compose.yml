@@ -5,9 +5,9 @@ services:
     container_name: duckies_postgres_db
     restart: always
     environment:
-      POSTGRES_DB: duckies_arena_db
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: ducky_secret_pass123
+      POSTGRES_DB: ${DB_NAME}
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
     ports:
       - "5432:5432"
     volumes:
@@ -19,8 +19,8 @@ services:
     container_name: duckies_pgadmin
     restart: always
     environment:
-      PGADMIN_DEFAULT_EMAIL: admin@duckies.com
-      PGADMIN_DEFAULT_PASSWORD: admin_password
+      PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL}
+      PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD}
     ports:
       - "8080:80"
     volumes:
