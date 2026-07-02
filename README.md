@@ -124,7 +124,7 @@ Usa las credenciales definidas en tu archivo `.env` local y mantenlas fuera de G
 Docker Compose lee automaticamente estas variables desde el archivo `.env` local.
 Rellena al menos `DB_PASSWORD` y `PGADMIN_DEFAULT_PASSWORD` antes de levantar los servicios.
 
-### 3. Levantar PostgreSQL y pgAdmin
+### 3. Levantar PostgreSQL, pgAdmin y backend
 
 Desde la raiz del proyecto:
 
@@ -153,10 +153,30 @@ Usa las credenciales definidas en tu archivo .env local.
 El servidor PostgreSQL aparece registrado automaticamente en pgAdmin como `Duckies Arena PostgreSQL`.
 La configuracion de pgAdmin se conserva entre reinicios mediante un volumen Docker.
 
-### 4. Importar base de datos
+El backend Express tambien se levanta con Docker y queda disponible en:
 
-La importacion SQL sigue siendo manual por ahora. No hay inicializacion automatica desde Docker.
-Si la base de datos esta vacia, importa el SQL manualmente con los comandos siguientes.
+```text
+http://localhost:3000
+```
+
+Dentro de Docker, el backend usa `DB_HOST=db` para conectarse al servicio PostgreSQL.
+
+### 4. Inicializacion automatica de base de datos
+
+PostgreSQL monta `database/init.sql` en `/docker-entrypoint-initdb.d/01-init.sql`.
+Este script se ejecuta automaticamente solo cuando el volumen `postgres_data` esta vacio.
+Si el volumen ya existe, Docker no vuelve a ejecutar `init.sql`.
+
+Para probar la inicializacion desde cero:
+
+```bash
+docker compose down -v
+docker compose up -d
+```
+
+Atencion: `docker compose down -v` borra los datos de PostgreSQL y la configuracion persistida de pgAdmin.
+
+La importacion manual ya no es necesaria en un arranque limpio. Si necesitas reimportar manualmente por algun motivo, puedes usar:
 
 PowerShell:
 
@@ -172,14 +192,14 @@ Get-Content .\database\UF2176_PP_DuckiesArena.sql |
 docker exec -i duckies_postgres_db psql -U postgres -d duckies_arena_db
 ```
 
-### 5. Instalar dependencias del backend
+### 5. Instalar dependencias del backend sin Docker
 
 ```bash
 cd backend
 npm install
 ```
 
-### 6. Iniciar servidor backend
+### 6. Iniciar servidor backend sin Docker
 
 Desde `backend/`:
 
@@ -192,6 +212,8 @@ Servidor disponible en:
 ```text
 http://localhost:3000
 ```
+
+El frontend aun no esta dockerizado porque la aplicacion React todavia no esta creada; actualmente solo existe la estructura base.
 
 ## API REST
 

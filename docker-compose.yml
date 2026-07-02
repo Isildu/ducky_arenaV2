@@ -12,6 +12,25 @@ services:
       - "5432:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
+      - ./database/init.sql:/docker-entrypoint-initdb.d/01-init.sql:ro
+
+  # Backend Express de Ducky Arena.
+  backend:
+    build:
+      context: ./backend
+    container_name: duckies_backend
+    restart: always
+    environment:
+      DB_HOST: db
+      DB_PORT: 5432
+      DB_NAME: ${DB_NAME}
+      DB_USER: ${DB_USER}
+      DB_PASSWORD: ${DB_PASSWORD}
+      PORT: 3000
+    ports:
+      - "3000:3000"
+    depends_on:
+      - db
 
   # Interfaz grafica para administrar PostgreSQL.
   pgadmin:
